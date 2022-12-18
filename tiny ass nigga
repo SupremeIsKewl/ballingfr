@@ -1,0 +1,224 @@
+local useNewAnims = true
+
+local plr = game.Players.LocalPlayer
+local char = game.Players.LocalPlayer.Character
+local cons = {}
+local ti = table.insert
+local rs = game:GetService("RunService")
+local stepped = rs.Stepped
+local heartbeat = rs.Heartbeat
+
+local function notify(title,text,duration)
+    game.StarterGui:SetCore("SendNotification", {
+        Title = title,
+        Text = text,
+        Duration = duration or 5;
+    })
+end
+
+
+local reanimstorage = Instance.new("Folder",char)
+reanimstorage.Name = "ReanimStorage"
+
+local reanim = game:GetObjects("rbxassetid://9914902278")[1]
+reanim.Humanoid.CameraOffset = Vector3.new(0,0,0)
+reanim.Name = "Reanim"
+
+reanim.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame 
+
+for i,v in pairs(reanim:GetChildren()) do
+    if v:IsA("BasePart") then
+        v.Transparency = 1
+        v.CanCollide = false
+    end
+end
+
+if useNewAnims then
+    local anim = char.Animate
+    spawn(function()
+        wait(.5)
+        anim.Disabled = true
+        anim.Parent = reanim
+        anim.Disabled = false
+    end)
+else 
+    spawn(function()
+        script = reanim.Animate
+        loadstring(reanim.Animate.Source)()
+    end)
+end
+for i,v in pairs(reanim:GetDescendants()) do
+    if v:IsA("BasePart") or v:IsA("Decal") then
+        v.Transparency = 1 
+    end 
+    if v:IsA("ParticleEmitter") then
+        v.Enabled = false
+    end
+end
+
+reanim.Parent = reanimstorage
+reanim.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame * CFrame.new(0,5,0)
+
+--pcall(function() sethiddenpropery(plr,"SimulationRadius",1000) end)
+
+-- netless/align by MyWorld, ty cutie <3
+local netless_Y = Vector3.new(0, 35, 0)
+local v3_101 = Vector3.new(1, 0, 1)
+local inf = math.huge
+local v3_0 = Vector3.new(0,0,0)
+
+local function getNetlessVelocity(realPartVelocity) --edit this if you have a better netless method
+    local netlessVelocity = realPartVelocity * v3_101
+    local mag = netlessVelocity.Magnitude
+    if mag > 0.1 then
+        netlessVelocity = netlessVelocity * 100 / mag
+    end
+    netlessVelocity = netlessVelocity + netless_Y
+    return netlessVelocity
+end
+
+local function align(Part0, Part1, p, r)
+	Part0.CustomPhysicalProperties = PhysicalProperties.new(0.0001, 0.0001, 0.0001, 0.0001, 0.0001)
+    Part0.CFrame = Part1.CFrame
+	local att0 = Instance.new("Attachment", Part0)
+	att0.Orientation = r or v3_0
+	att0.Position = v3_0
+	att0.Name = "att0_" .. Part0.Name
+	local att1 = Instance.new("Attachment", Part1)
+	att1.Orientation = v3_0 
+	att1.Position = p or v3_0
+	att1.Name = "att1_" .. Part1.Name
+
+	local ape = Instance.new("AlignPosition", att0)
+	ape.ApplyAtCenterOfMass = false
+	ape.MaxForce = inf
+	ape.MaxVelocity = inf
+	ape.ReactionForceEnabled = false
+	ape.Responsiveness = 200
+	ape.Attachment1 = att1
+	ape.Attachment0 = att0
+	ape.Name = "AlignPositionRtrue"
+	ape.RigidityEnabled = true
+
+	local apd = Instance.new("AlignPosition", att0)
+	apd.ApplyAtCenterOfMass = false
+	apd.MaxForce = inf
+	apd.MaxVelocity = inf
+	apd.ReactionForceEnabled = false
+	apd.Responsiveness = 200
+	apd.Attachment1 = att1
+	apd.Attachment0 = att0
+	apd.Name = "AlignPositionRfalse"
+	apd.RigidityEnabled = false
+
+	local ao = Instance.new("AlignOrientation", att0)
+	ao.MaxAngularVelocity = inf
+	ao.MaxTorque = inf
+	ao.PrimaryAxisOnly = false
+	ao.ReactionTorqueEnabled = false
+	ao.Responsiveness = 200
+	ao.Attachment1 = att1
+	ao.Attachment0 = att0
+	ao.RigidityEnabled = false
+    
+	if type(getNetlessVelocity) == "function" then
+	    local realVelocity = Vector3.new(0,30,0)
+        local steppedcon = stepped:Connect(function()
+            Part0.Velocity = realVelocity
+        end)
+        local heartbeatcon = heartbeat:Connect(function()
+            realVelocity = Part0.Velocity
+            Part0.Velocity = getNetlessVelocity(realVelocity)
+        end)
+        Part0.Destroying:Connect(function()
+            Part0 = nil
+            steppedcon:Disconnect()
+            heartbeatcon:Disconnect()
+        end)
+        ti(cons,steppedcon)
+        ti(cons,heartbeatcon)
+	end
+	
+    att0.Orientation = r or v3_0
+	att0.Position = v3_0
+	att1.Orientation = v3_0 
+	att1.Position = p or v3_0
+	Part0.CFrame = Part1.CFrame
+end
+
+for _,part in next, reanim:GetChildren() do
+    if part:IsA("BasePart") then
+        ti(cons,stepped:Connect(function()
+            part.CanCollide = false
+        end))
+    end
+end
+
+for _,part in next, char:GetChildren() do
+    if part:IsA("BasePart") then
+        ti(cons,stepped:Connect(function()
+            part.CanCollide = false
+        end))
+    end
+end
+
+local tinylimbs = {}
+local tinytorso = char:FindFirstChild("Poppin' Eyes")
+local tinyhead = char:FindFirstChild("macaron")
+
+--char.Torso.Anchored = true
+
+for i,v in pairs(char:GetChildren()) do
+    if v:IsA("Accessory") and v.Handle.Size == Vector3.new(1, 0.5, 0.5) then
+        ti(tinylimbs,v)
+    end
+    if v:IsA("BasePart") and v.Name ~= "Head" and v.Name ~= "Torso" then
+        v:Destroy()
+    end
+    if v:IsA("Accessory") and not (table.find(tinylimbs,v) or v == tinytorso or v == tinyhead) then
+        print(v.Name)
+        v.Handle:BreakJoints()
+        v.Handle:Destroy()
+        v:Destroy()
+    end
+end
+
+for i,v in pairs(tinylimbs) do
+    v.Handle:BreakJoints()
+    v.Handle.Mesh:Destroy()
+end
+
+tinyhead.Handle:BreakJoints()
+tinyhead.Handle.SpecialMesh:Destroy()
+tinytorso.Handle:BreakJoints()
+tinytorso.Handle.SpecialMesh:Destroy()
+
+align(tinyhead.Handle,reanim["Head"])
+align(tinytorso.Handle,reanim["Torso"],nil,Vector3.new(90,0,0))
+align(tinylimbs[1].Handle,reanim["Right Arm"],nil,Vector3.new(0,0,90))
+align(tinylimbs[2].Handle,reanim["Left Arm"],nil,Vector3.new(0,0,90))
+align(tinylimbs[3].Handle,reanim["Right Leg"],nil,Vector3.new(0,0,90))
+align(tinylimbs[4].Handle,reanim["Left Leg"],nil,Vector3.new(0,0,90))
+
+align(char.Torso,reanim.HumanoidRootPart,Vector3.new(0,-4,-.8))
+
+char.Torso.CFrame = reanim.HumanoidRootPart.CFrame
+
+workspace.CurrentCamera.CameraSubject = reanim.Humanoid
+plr.Character = reanim
+
+local reset = Instance.new("BindableEvent")
+ti(cons,reset.Event:Connect(function()
+    reanim:Destroy()
+    plr.Character = nil
+    plr.Character = char
+    plr.Character.Humanoid.Health = 0
+    for i,v in pairs(cons) do
+        v:Disconnect()
+    end
+    game:GetService("StarterGui"):SetCore("ResetButtonCallback", true)
+    reset:Remove()
+    notify("Resetting","Please wait " .. tostring(game.Players.RespawnTime) .. " seconds",game.Players.RespawnTime)
+end))
+
+game:GetService("StarterGui"):SetCore("ResetButtonCallback", reset)
