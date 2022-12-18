@@ -1,1962 +1,1803 @@
+--Emetimex
 plr = game.Players.LocalPlayer
-char=game.Players.LocalPlayer.Character
-ct={}
-te=table.insert
+local colormansup = 255
+local sliding = false
 
-HumanDied=false
+if plr:WaitForChild("PlayerScripts"):FindFirstChild("Player Stuff") then
 
-for i,v in next, game:GetService("Players").LocalPlayer.Character:GetDescendants() do
-if v:IsA("BasePart") then 
-te(ct,game:GetService("RunService").Heartbeat:connect(function()
-pcall(function()
-v.Velocity = Vector3.new(0,-30,0)
-sethiddenproperty(game.Players.LocalPlayer,"MaximumSimulationRadius",math.huge)
-sethiddenproperty(game.Players.LocalPlayer,"SimulationRadius",999999999)
-game.Players.LocalPlayer.ReplicationFocus = workspace
-end)
-end))
+	plr:WaitForChild("PlayerScripts"):FindFirstChild("Player Stuff"):Destroy()
+
+	end
+
+local camerakill = false
+mobile = false
+local downeddel= false
+local walkingmode = false
+char  = plr.Character
+if char:FindFirstChild("ClientInputHandler") then
+	char:FindFirstChild("ClientInputHandler"):Destroy()
+end
+if plr:FindFirstChild("Status") then
+	plr:FindFirstChild("Status"):Destroy()
+end
+if game.Workspace:FindFirstChild("Remote") then
+if game.Workspace:FindFirstChild("Remote"):FindFirstChild("TeamEvent") then
+Workspace.Remote.TeamEvent:FireServer("Medium stone grey")
 end
 end
+local downed = false
+local combatmusic = Instance.new("Sound",char)
+combatmusic.Volume = 0
+combatmusic.PlaybackSpeed = 1
+combatmusic.Looped = true
 
-local srv= game:GetService("RunService")
 
-fl=Instance.new('Folder',char);fl.Name='ReanimStorage'
 
-char.Archivable = true
-local reanim = char:Clone()
-reanim.Name='Reanim'
+local ambience = Instance.new("Sound",char)
+ambience.Volume = 0.5
+ambience.PlaybackSpeed = 1
+ambience.Looped = true
 
-for i,v in next, reanim:GetDescendants() do
-if v:IsA('BasePart') or v:IsA('Decal') then
-v.Transparency = 1 
-end 
+local winder = Instance.new("Sound",char)
+winder.SoundId = "rbxassetid://337604103"
+winder.Volume = 0
+winder.PlaybackSpeed = 1
+winder.Looped = true
+winder:Play()
+local windercloth = Instance.new("Sound",char)
+windercloth.SoundId = "rbxassetid://195879271"
+windercloth.Volume = 0
+windercloth.PlaybackSpeed = 1
+windercloth.Looped = true
+windercloth:Play()
+local explorationmusic = Instance.new("Sound",char)
+explorationmusic.Volume = 0
+explorationmusic.PlaybackSpeed = 1
+explorationmusic.Looped = true
+
+local rannum = math.random(1,11)
+if rannum == 1 then
+   combatmusic.SoundId = "rbxassetid://4842424057"
+explorationmusic.SoundId = "rbxassetid://6092889291"
+ambience.SoundId = "rbxassetid://4842514147" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 2 then
+   combatmusic.SoundId = "rbxassetid://5167357719"
+explorationmusic.SoundId = "rbxassetid://5136807172"
+ambience.SoundId = "rbxassetid://5136807172" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 3 then
+   combatmusic.SoundId = "rbxassetid://5355007603"
+explorationmusic.SoundId = "rbxassetid://5192956194"
+ambience.SoundId = "rbxassetid://5192956194" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 4 then
+   combatmusic.SoundId = "rbxassetid://1591306349"
+explorationmusic.SoundId = "rbxassetid://5246801658"
+ambience.SoundId = "rbxassetid://5167384455" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 5 then
+   combatmusic.SoundId = "rbxassetid://5356631522"
+explorationmusic.SoundId = "rbxassetid://4502246491"
+ambience.SoundId = "rbxassetid://4502246491" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 6 then
+   combatmusic.SoundId = "rbxassetid://5183689299"
+explorationmusic.SoundId = "rbxassetid://538850338"
+ambience.SoundId = "rbxassetid://538850338" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 7 then
+   combatmusic.SoundId = "rbxassetid://5258344366"
+explorationmusic.SoundId = "rbxassetid://5079119831"
+ambience.SoundId = "rbxassetid://5079119831" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 8 then
+   combatmusic.SoundId = "rbxassetid://5995057631"
+explorationmusic.SoundId = "rbxassetid://477207390"
+ambience.SoundId = "rbxassetid://477207390" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 9 then
+   combatmusic.SoundId = "rbxassetid://4841933336"
+explorationmusic.SoundId = "rbxassetid://5114418235"
+ambience.SoundId = "rbxassetid://5114418235" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 10 then
+   combatmusic.SoundId = "rbxassetid://5132571388"
+explorationmusic.SoundId = "rbxassetid://5995060646"
+ambience.SoundId = "rbxassetid://5995060646" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
+end
+if rannum == 11 then
+   combatmusic.SoundId = "rbxassetid://5433879104"
+explorationmusic.SoundId = "rbxassetid://4692224051"
+ambience.SoundId = "rbxassetid://4692224051" 
+ ambience:Play()
+ explorationmusic:Play()
+ combatmusic:Play()
 end
 
---flinge = false
+local tricksinarow = 0
+local tricktime = 0
+local timestanding = 0
+local combattime = 0
 
-penis=5.65
-plr.Character=nil
-plr.Character=char
-char.Humanoid.AutoRotate=false
-char.Humanoid.WalkSpeed=0
-char.Humanoid.JumpPower=0
-char.Torso.Anchored = true
-wait(penis)
-char.Torso.Anchored=false
-char.Humanoid.Health=0
---reanim.Humanoid.AutoRotate=false
-reanim.Animate.Disabled = true
-reanim.Parent = fl
-reanim.HumanoidRootPart.CFrame = char.HumanoidRootPart.CFrame*CFrame.new(0,5,0)
 
-function create(part, parent, p, r)
-Instance.new("Attachment",part)
-Instance.new("AlignPosition",part)
-Instance.new("AlignOrientation",part)
-Instance.new("Attachment",parent)
-part.Attachment.Name = part.Name
-parent.Attachment.Name = part.Name
-part.AlignPosition.Attachment0 = part[part.Name]
-part.AlignOrientation.Attachment0 = part[part.Name]
-part.AlignPosition.Attachment1 = parent[part.Name]
-part.AlignOrientation.Attachment1 = parent[part.Name]
-parent[part.Name].Position = p or Vector3.new()
-part[part.Name].Orientation = r or Vector3.new()
-part.AlignPosition.MaxForce = 999999999
-part.AlignPosition.MaxVelocity = math.huge
-part.AlignPosition.ReactionForceEnabled = false
-part.AlignPosition.Responsiveness = math.huge
-part.AlignOrientation.Responsiveness = math.huge
-part.AlignPosition.RigidityEnabled = false
-part.AlignOrientation.MaxTorque = 999999999
-part.Massless=true
-end
 
-function Pos(part, parent, p)
-Instance.new("Attachment",part)
-Instance.new("AlignPosition",part)
-Instance.new("Attachment",parent)
-part.Attachment.Name = part.Name
-parent.Attachment.Name = part.Name
-part.AlignPosition.Attachment0 = part[part.Name]
---part.AlignOrientation.Attachment0 = part[part.Name]
-part.AlignPosition.Attachment1 = parent[part.Name]
---part.AlignOrientation.Attachment1 = parent[part.Name]
-parent[part.Name].Position = p or Vector3.new()
-part.AlignPosition.MaxForce = 999999999
-part.AlignPosition.MaxVelocity = math.huge
-part.AlignPosition.ReactionForceEnabled = false
-part.AlignPosition.Responsiveness = math.huge
---part.AlignOrientation.Responsiveness = math.huge
---part.AlignPosition.RigidityEnabled = false
---part.AlignOrientation.MaxTorque = 999999999
-part.Massless=true
-end
+root = char:WaitForChild("HumanoidRootPart")
 
-for i,part in next, char:GetDescendants() do
-if part:IsA('BasePart') then
-te(ct,srv.RenderStepped:Connect(function()
-part.CanCollide=false
-end))
-end
-end
+local slidingsound = Instance.new("Sound",root)
+slidingsound.SoundId = "rbxassetid://4086205029"
+slidingsound.PlaybackSpeed = 1.25
+slidingsound.Looped = true
+slidingsound.Volume = 0.75
 
-for i,part in next, char:GetDescendants() do
-if part:IsA('BasePart') then
-te(ct,srv.Stepped:Connect(function()
-part.CanCollide=false
-end))
-end
-end
+local wallrunningsound = Instance.new("Sound",root)
+wallrunningsound.SoundId = "rbxassetid://401049343"
+wallrunningsound.PlaybackSpeed = 1
+wallrunningsound.Looped = true
+wallrunningsound.Volume = 0.75
 
-for i,part in next, reanim:GetDescendants() do
-if part:IsA('BasePart') then
-te(ct,srv.RenderStepped:Connect(function()
---part.CanCollide=false
-end))
-end
-end
 
-for i,part in next, reanim:GetDescendants() do
-if part:IsA('BasePart') then
-te(ct,srv.Stepped:Connect(function()
---part.CanCollide=false
-end))
-end
-end
-
-for i,v in next, char:GetDescendants() do
-if v:IsA('Accessory') then
-create(v.Handle,reanim[v.Name].Handle)
-end
-end
-
---Pos(fhrp,reanim['Torso'])
-create(char['Head'],reanim['Head'])
-create(char['Torso'],reanim['Torso'])
-Pos(char['HumanoidRootPart'],reanim['Torso'],Vector3.new(0,0,0))
-create(char['Right Arm'],reanim['Right Arm'])
-create(char['Left Arm'],reanim['Left Arm'])
-create(char['Right Leg'],reanim['Right Leg'])
-create(char['Left Leg'],reanim['Left Leg'])
-
-m = plr:GetMouse()
-
-local LVecPart = Instance.new("Part", fl) LVecPart.CanCollide = false LVecPart.Transparency = 1
-
-te(ct,srv.RenderStepped:Connect(function()
-local lookVec = workspace.CurrentCamera.CFrame.lookVector
-local Root = reanim["HumanoidRootPart"]
-LVecPart.Position = Root.Position
-LVecPart.CFrame = CFrame.new(LVecPart.Position, Vector3.new(lookVec.X * 10000, lookVec.Y, lookVec.Z * 10000))
-end))
-
-wdown=false
-sdown=false
-adown=false
-ddown=false
-spacedown=false
-
---reanim.HumanoidRootPart.RootJoint.Part0=nil
-
-function flinger(p)
-f=Instance.new('BodyAngularVelocity',p)
-f.AngularVelocity = Vector3.new(9e9,9e9,9e9)
-f.MaxTorque=Vector3.new(9e9,9e9,9e9)
-end
-
-flinger(char.HumanoidRootPart)
-
-m=plr:GetMouse()
-
---char.HumanoidRootPart.Transparency = 0
-
-bp=Instance.new('BodyPosition',char.HumanoidRootPart)
-bp.P = 9e9
-bp.D = 9e9
-bp.MaxForce=Vector3.new(99999,99999,99999)
-
-local flingtarget
-
-te(ct,srv.Heartbeat:Connect(function()
-    if flingtarget then
-        print("flinging " .. flingtarget.Parent.Name)
-        bp.Position = flingtarget.Position
-        char.HumanoidRootPart.Position = flingtarget.Position
-    else
-        bp.Position=reanim.Torso.Position
-        char.HumanoidRootPart.Position=reanim.Torso.Position - Vector3.new(0,10,0)
+function randomclothrollsound(truth)
+	coroutine.resume(coroutine.create(function()
+	    if truth ~= nil then
+	         local s = Instance.new("Sound",root)
+	    s.Volume = 0.8 +math.random(1,6)*0.05
+	     s.PlaybackSpeed = 0.8 +math.random(1,6)*0.05
+	    
+	     local rannum = math.random(1,5)
+	     if rannum == 1 then 
+	         s.SoundId = "rbxassetid://4086203738"
+	         elseif rannum == 2 then
+	         s.SoundId = "rbxassetid://4086203442"
+	         elseif rannum == 3 then
+	             s.SoundId = "rbxassetid://4086203142"
+	         elseif rannum == 4 then
+                 s.SoundId = "rbxassetid://4086203973"
+                 else
+	         s.SoundId = "rbxassetid://4307029050"
+	         end
+	    
+	    
+	    s:Play()
+	     game:GetService("Debris"):AddItem(s,4)
+	        else
+	         local s = Instance.new("Sound",root)
+	    s.Volume = 0.25 +math.random(1,6)*0.05
+	     s.PlaybackSpeed = 0.8 +math.random(1,6)*0.05
+	    
+	     local rannum = math.random(1,7)
+	     if rannum == 1 then 
+	         s.SoundId = "rbxassetid://3929467229"
+	         elseif rannum == 2 then
+	         s.SoundId = "rbxassetid://3929467449"
+	         elseif rannum == 3 then
+	             s.SoundId = "rbxassetid://3929467655"
+	         elseif rannum == 4 then
+                 s.SoundId = "rbxassetid://3929467888"
+                 	         elseif rannum == 5 then
+                 s.SoundId = "rbxassetid://4458760046"
+                 	         elseif rannum == 6 then
+                 s.SoundId = "rbxassetid://4458760518"
+                 else
+	         s.SoundId = "rbxassetid://4458759938"
+	         end
+	    
+	    
+	    s:Play()
+	     game:GetService("Debris"):AddItem(s,4)
+	        end
+	   
+	end))
+    
     end
+
+
+local rollingsound = Instance.new("Sound",root)
+rollingsound.SoundId = "rbxassetid://2985734522"
+rollingsound.PlaybackSpeed = 1
+rollingsound.Volume = 0.75
+
+local bodymovesound = Instance.new("Sound",root)
+bodymovesound.SoundId = "rbxassetid://152206206"
+bodymovesound.PlaybackSpeed = 0.945
+bodymovesound.Volume = 2.35
+
+
+local downedsound = Instance.new("Sound",root)
+downedsound.SoundId = "rbxassetid://178088040"
+downedsound.PlaybackSpeed = 1
+downedsound.Volume = 3
+
+
+
+local jumplandsoundthingy = Instance.new("Sound",root)
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+jumplandsoundthingy.PlaybackSpeed = 0.785
+jumplandsoundthingy.Volume = 2
+
+hum = char:WaitForChild("Humanoid")
+hum.JumpPower = 50
+	local colorparkourkill = Instance.new("ColorCorrectionEffect",game.Lighting)
+	colorparkourkill.Saturation = 0
+	colorparkourkill.TintColor = Color3.new(1,1,1)
+if game.Lighting:FindFirstChild("COLORPARKOURKILL") then
+	game.Lighting:FindFirstChild("COLORPARKOURKILL"):Destroy()
+
+
+end
+torso = char:WaitForChild("Torso")
+local gyro = Instance.new("BodyGyro",torso)
+gyro.D = 200
+gyro.P = 1800
+local cameratilterman = 0
+local springjumpdel  =false
+local gobackroll = false
+local befpower = gyro.P
+gyro.P = befpower
+gyro.MaxTorque = Vector3.new(0,0,0)
+local runvel = Instance.new("BodyVelocity",root)
+runvel.MaxForce = Vector3.new(0,0,0)
+runvel.P = 9999999999999999999999
+hum.WalkSpeed =20
+
+local flowmax = 35
+local flowmin = 16
+local dodgedel = false
+local crouchspeed = 8
+local flow = flowmin
+for i,v in pairs(workspace:GetDescendants()) do
+	if v.ClassName == "Part" or v.ClassName == "UnionOperation" or v.ClassName == "MeshPart" then
+		if v.ClassName == "UnionOperation" then
+			v.CollisionFidelity = Enum.CollisionFidelity.PreciseConvexDecomposition
+		end
+		if v.Transparency == 1 then
+			v.CanCollide = false
+		end
+
+	end
+
+end
+floorpositiony = 0
+local UIS = game:GetService("UserInputService")
+local GuiService = game:GetService("GuiService")
+
+if UIS.TouchEnabled and not UIS.KeyboardEnabled and not UIS.MouseEnabled
+	and not UIS.GamepadEnabled and not GuiService:IsTenFootInterface() then
+
+	mobile = true
+	jb = plr.PlayerGui:WaitForChild("TouchGui"):WaitForChild("TouchControlFrame"):WaitForChild("JumpButton")
+	jb.MouseButton1Down:Connect(function()
+		wallrunabletrue()
+		wallruncheck()
+	end)
+end
+local leftwallrunanim = Instance.new("Animation",char)
+leftwallrunanim.AnimationId = "rbxassetid://180426354"
+local leftwallrunanimplay = hum:LoadAnimation(leftwallrunanim)
+
+
+local downedanim1 = Instance.new("Animation",char)
+downedanim1.AnimationId = "rbxassetid://282574440"
+local downedanim1play = hum:LoadAnimation(downedanim1)
+
+
+
+
+local rightwallrunanim = Instance.new("Animation",char)
+rightwallrunanim.AnimationId = "rbxassetid://180426354"
+local rightwallrunanimplay = hum:LoadAnimation(rightwallrunanim)
+
+
+local verticalwallrunanim = Instance.new("Animation",char)
+verticalwallrunanim.AnimationId = "rbxassetid://180426354"
+local verticalwallrunanimplay = hum:LoadAnimation(verticalwallrunanim)
+
+local roll = Instance.new("Animation",char)
+roll.AnimationId = "rbxassetid://180612465"
+local rollplay = hum:LoadAnimation(roll)
+
+
+local crouching = Instance.new("Animation",char)
+crouching.AnimationId = "rbxassetid://287325678"
+local crouchingplay = hum:LoadAnimation(crouching)
+
+local springjump = Instance.new("Animation",char)
+springjump.AnimationId = "rbxassetid://287325678"
+local springjumpplay = hum:LoadAnimation(springjump)
+
+
+local dodging = Instance.new("Animation",char)
+dodging.AnimationId = "rbxassetid://287325678"
+local dodgingplay = hum:LoadAnimation(dodging)
+
+local slidinganim = Instance.new("Animation",char)
+slidinganim.AnimationId = "rbxassetid://132546884"
+local slidingplay = hum:LoadAnimation(slidinganim)
+local rollering = false
+
+
+hum.Died:Connect(function()
+if game.Workspace:FindFirstChild("Remote") then
+if game.Workspace:FindFirstChild("Remote"):FindFirstChild("TeamEvent") then
+Workspace.Remote.TeamEvent:FireServer("Bright orange") 
+
+end
+end
+	camerakill = true
+	colorparkourkill:Destroy()
+	for i = 20,1,-1 do
+wait()
+combatmusic.PlaybackSpeed = combatmusic.PlaybackSpeed-0.05
+ambience.PlaybackSpeed = ambience.PlaybackSpeed-0.05
+explorationmusic.PlaybackSpeed = explorationmusic.PlaybackSpeed-0.05
+end
+
+end)
+
+local tappeda = false
+local tappeds = false
+local tappedd = false
+local tappedw = false
+UIS.InputEnded:Connect(function(input,gamestuff)
+	if input.KeyCode == Enum.KeyCode.S then
+		if gamestuff then return end
+
+		gobackroll  = false
+	end
+end)
+
+
+UIS.InputBegan:Connect(function(input,gamestuff)
+        	if input.KeyCode == Enum.KeyCode.N then
+		if gamestuff then return end
+
+if walkingmode == false then
+walkingmode = true
+else
+walkingmode = false
+end
+	end
+        	if input.KeyCode == Enum.KeyCode.M then
+		if gamestuff then return end
+		if ambience.PlaybackSpeed ~= 0 then
+		    ambience.PlaybackSpeed  = 0
+		     combatmusic.PlaybackSpeed  = 0
+		      explorationmusic.PlaybackSpeed  = 0
+		      else
+		      		    ambience.PlaybackSpeed  = 1
+		     combatmusic.PlaybackSpeed  = 1
+		      explorationmusic.PlaybackSpeed  = 1
+		    end
+		
+		end
+    
+
+	if input.KeyCode == Enum.KeyCode.S then
+		if gamestuff then return end
+
+		gobackroll  = true
+	end
+		if downed == true then return end
+	if sliding == true then return end
+	if input.KeyCode == Enum.KeyCode.A then
+		if hitfloor == false then return end
+		if gamestuff then return end
+		if tappeda == false then
+			tappeda = true
+			wait(0.25)
+			tappeda = false
+		else
+			if dodgedel == false then
+				dodgedel = true
+				dodgingplay:Play()
+				randomclothrollsound()
+				local bv = Instance.new("BodyVelocity",char:WaitForChild("Head"))
+				bv.Velocity = root.CFrame.RightVector*-flow*2+Vector3.new(0,flow/2,0)
+				bv.MaxForce = Vector3.new(99999,99999,99999)
+				bv.P = 99999999999999
+				wait(0.1)
+				bv:Destroy()
+				wait(0.2)
+				dodgingplay:Stop()
+				dodgedel = false
+			end
+
+		end
+
+	end
+	if input.KeyCode == Enum.KeyCode.S then
+		if hitfloor == false then return end
+		if gamestuff then return end
+		if tappeds == false then
+			tappeds = true
+			wait(0.25)
+			tappeds = false
+		else
+			if dodgedel == false then
+				dodgedel = true
+				dodgingplay:Play()
+					randomclothrollsound()
+				local bv = Instance.new("BodyVelocity",char:WaitForChild("Head"))
+				bv.Velocity = root.CFrame.LookVector*-flow*2+Vector3.new(0,flow/2,0)
+				bv.MaxForce = Vector3.new(99999,99999,99999)
+				bv.P = 99999999999999
+				wait(0.1)
+				bv:Destroy()
+				wait(0.2)
+				dodgingplay:Stop()
+				dodgedel = false
+			end
+
+		end
+
+	end
+	if input.KeyCode == Enum.KeyCode.D then
+		if hitfloor == false then return end
+		if gamestuff then return end
+		if tappedd == false then
+			tappedd = true
+			wait(0.25)
+			tappedd = false
+		else
+			if dodgedel == false then
+				dodgedel = true
+				dodgingplay:Play()
+					randomclothrollsound()
+				local bv = Instance.new("BodyVelocity",char:WaitForChild("Head"))
+				bv.Velocity = root.CFrame.RightVector*flow*2+Vector3.new(0,flow/2,0)
+				bv.MaxForce = Vector3.new(99999,99999,99999)
+				bv.P = 99999999999999
+				wait(0.1)
+				bv:Destroy()
+				wait(0.2)
+				dodgingplay:Stop()
+				dodgedel = false
+			end
+
+		end
+
+	end
+	if input.KeyCode == Enum.KeyCode.W then
+		if gamestuff then return end
+		if hitfloor == false then return end
+		if tappedw == false then
+			tappedw = true
+			wait(0.25)
+			tappedw = false
+		else
+			if dodgedel == false then
+				dodgedel = true
+				dodgingplay:Play()
+					randomclothrollsound()
+				local bv = Instance.new("BodyVelocity",char:WaitForChild("Head"))
+				bv.Velocity = root.CFrame.LookVector*flow*2+Vector3.new(0,flow/2,0)
+				bv.MaxForce = Vector3.new(99999,99999,99999)
+				bv.P = 99999999999999
+				wait(0.1)
+				bv:Destroy()
+				wait(0.2)
+				dodgingplay:Stop()
+				dodgedel = false
+			end
+
+		end
+
+	end
+end)
+
+hum:SetStateEnabled(Enum.HumanoidStateType.FallingDown, false)
+hum:SetStateEnabled(Enum.HumanoidStateType.Ragdoll, false)
+
+--rollplay:AdjustSpeed(0)
+--rollplay.TimePosition = 1
+
+local player = game.Players.LocalPlayer
+local character = player.Character
+local hum = character:FindFirstChild("Humanoid")
+if not character or not character.Parent then
+	character = player.CharacterAdded:wait()
+	  if camerakill == true then return end
+end
+local torso = character:WaitForChild("Torso")
+local rightShoulder = torso:WaitForChild("Right Shoulder")
+local leftShoulder = torso:WaitForChild("Left Shoulder")
+local camera = game.Workspace.CurrentCamera
+
+updateSpeed = 0.5/2
+
+
+local plr = game.Players.LocalPlayer
+local char = plr.Character
+	local ignorelist = {plr.Character}
+	for i,v in pairs(workspace:GetDescendants()) do
+	    if v.ClassName == "Part" or v.ClassName == "MeshPart" or v.ClassName == "UnionOperation" then
+	        if v.CanCollide == false or v.Transparency == 1 then 
+	            
+	            ignorelist[#ignorelist+1] = v
+	            end
+	        end
+	    end
+leftarm = char:WaitForChild("Left Arm")
+rightarm = char:WaitForChild("Right Arm")
+leftleg = char:WaitForChild("Left Leg")
+if char:FindFirstChild("Head"):FindFirstChild("BillboardGui") then
+	char:FindFirstChild("Head"):FindFirstChild("BillboardGui"):Destroy()
+end
+local flowermax = flowmax-flowmin
+local killermancamfov = 0
+rightleg = char:WaitForChild("Right Leg")
+local hum = char:WaitForChild("Humanoid")
+
+local rootpart,head = char:WaitForChild("HumanoidRootPart"),char:WaitForChild("Head")
+
+game:GetService("RunService"):BindToRenderStep("CameraOffset",Enum.RenderPriority.Character.Value+1,function()
+	local offsetman = 1.5	
+	if sliding == true then
+		offsetman = 0
+
+
+	end
+	if hum.Health == 0 then script:Destroy() end
+	local distance = (character.Head.Position - camera.CoordinateFrame.p).magnitude
+	if distance <= 1 then
+		rightShoulder.C0 = rightShoulder.C0:lerp((camera.CoordinateFrame * CFrame.new(1, -1, 0)):toObjectSpace(torso.CFrame):inverse() * CFrame.Angles(0, math.pi/2, 0), updateSpeed)
+		leftShoulder.C0 = leftShoulder.C0:lerp((camera.CoordinateFrame * CFrame.new(-1, -1, 0)):toObjectSpace(torso.CFrame):inverse() * CFrame.Angles(0, -math.pi/2, 0), updateSpeed)
+	else
+		rightShoulder.C0 = rightShoulder.C0:lerp(CFrame.new(1, 0.5, 0) * CFrame.Angles(0, math.pi/2, 0),updateSpeed)
+		leftShoulder.C0 = leftShoulder.C0:lerp(CFrame.new(-1, 0.5, 0) * CFrame.Angles(0, -math.pi/2, 0),updateSpeed)
+	end
+	hum.CameraOffset = (rootpart.CFrame+Vector3.new(0,offsetman,0)):pointToObjectSpace(head.CFrame.p)
+	rightarm.LocalTransparencyModifier = rightarm.Transparency+0.5
+	leftarm.LocalTransparencyModifier = leftarm.Transparency+0.5
+	leftleg.LocalTransparencyModifier = leftleg.Transparency+0.5
+	rightleg.LocalTransparencyModifier = rightleg.Transparency+0.5
+	if camerakill == false then
+game.StarterGui:SetCoreGuiEnabled(Enum.CoreGuiType.All, true)
+		killermancamfov = 20*(flow/flowermax)
+		colorparkourkill.TintColor = Color3.new(1,colormansup/255,colormansup/255)
+		colormansup = colormansup+5
+		if colormansup> 255 then
+			colormansup = 255
+		end
+		cam.FieldOfView = 50+killermancamfov
+		cam.CFrame = cam.CFrame*CFrame.Angles(0,0,math.rad(cameratilterman))
+
+	end
+end)
+local befh = hum.Health
+
+
+
+
+local function round(number, decimalPlaces)
+	number = math.round(number * 10^decimalPlaces) * 10^-decimalPlaces
+end
+local humdowner = false
+
+function downer()
+    
+     flow = flow-flowmax/10
+					        downedanim1play:Play()
+					        colormansup = colormansup-60
+					        downedsound:play()
+					        	randomclothrollsound(true)
+					        		randomclothrollsound(true)
+					        			randomclothrollsound()
+					        			randomclothrollsound()
+					        			randomclothrollsound()
+downed = true
+hum.JumpPower =0
+downeddel = true
+coroutine.resume(coroutine.create(function()
+						
+					
+					local tiltnumb = 0
+					local rannum = math.random(1,4)
+					
+					if rannum == 1 then
+						tiltnumb = 80
+						elseif rannum == 2 then
+						tiltnumb = 50
+					elseif rannum == 3 then
+						tiltnumb = -80
+						else
+						tiltnumb = -50
+					end
+	
+					local cameratilterman2 =tiltnumb*0.2
+					
+
+
+
+					local cameratiltermax = cameratilterman2
+					
+					local sinnerman = 1
+					local sinnerman2 = 0
+					for i = 20,1,-1 do
+						game:GetService("RunService").RenderStepped:Wait()
+						  if camerakill == true then return end
+						sinnerman = sinnerman-0.05
+						sinnerman2 = math.sin(sinnerman*1.25)
+						print(sinnerman .. " I AM SIN")
+						cameratilterman2 = cameratiltermax*sinnerman2
+						
+						cam.CFrame = cam.CFrame*CFrame.Angles(0,0,math.rad(cameratilterman2))
+					end
+	wait(1)
+				downeddel = false
+
 end))
-
-local Highlight = Instance.new("SelectionBox")
-Highlight.Adornee = char.HumanoidRootPart
-Highlight.LineThickness= 0.01
-Highlight.Color3 = Color3.fromRGB(30,255,30)
-Highlight.Parent = char.HumanoidRootPart
-Highlight.Name = "FlingVis"
-
-hrp = Highlight
-
-spawn(function()
-    while true do
-        if ded then break end
-        for i = 1, 360 do
-            local col = Color3.fromHSV(i/360, 1, 1)
-            srv.Stepped:Wait()
-        end
     end
+
+hum.HealthChanged:Connect(function()
+	colorparkourkill.Saturation = -1+hum.Health/hum.MaxHealth
+	if hum.Health/hum.MaxHealth < 0.25 then
+	    
+	    if humdowner == false then
+	        humdowner = true
+	         downer()
+	        end
+	    end
+	
+	
+	if hum.Health < befh then
+	    combattime = 18
+		local damagetiltmax = befh - hum.Health
+		round(damagetiltmax,1)
+		colormansup = colormansup-damagetiltmax*4.25
+		local cameratilterman2 = math.random(damagetiltmax*-20,damagetiltmax*20)
+		cameratilterman2 =     cameratilterman2 *0.05
+
+		local cameratilterman3 = math.random(damagetiltmax*-20,damagetiltmax*20)
+		cameratilterman3 =     cameratilterman3 *0.0008675
+
+
+		local cameratiltermax = cameratilterman2
+		local cameratiltermax2 = cameratilterman3
+		local sinnerman = 1
+		local sinnerman2 = 0
+		for i = 10,1,-1 do
+			game:GetService("RunService").RenderStepped:Wait()
+			  
+			sinnerman = sinnerman-0.1
+			sinnerman2 = math.sin(sinnerman*1.25)
+			print(sinnerman .. " I AM SIN")
+			cameratilterman2 = cameratiltermax*sinnerman2
+			cameratilterman3 = cameratiltermax2*sinnerman2
+			cam.CFrame = cam.CFrame*CFrame.Angles(math.rad(cameratilterman3),0,math.rad(cameratilterman2))
+		end
+
+
+	end
+
+	befh = hum.Health        
+
 end)
 
-te(ct,m.KeyDown:Connect(function(e)
-if e ==' ' then
-spacedown=true end
-if e =='w' then
-wdown=true end
-if e =='s' then
-sdown=true end
-if e =='a' then
-adown=true end
-if e =='d' then
-ddown=true
+function tilterepic(maxnumbman,slideringman)
+	coroutine.resume(coroutine.create(function()
+
+		if maxnumbman ~= 0 then
+			local sinnerman = 0
+			local slidingtruth = false
+			if slideringman ~= nil then
+				if slideringman == true then
+					slidingtruth = true
+				end
+			end
+			for i = 20,1,-1 do
+				if slidingtruth == false then
+					if wallrunning == false then return end      
+				end
+
+				if slidingtruth == true then
+					if sliding == false then return end
+				end
+
+				game:GetService("RunService").RenderStepped:Wait()
+				  if camerakill == true then return end
+				sinnerman = sinnerman+0.05
+				sinnerman = math.sin(sinnerman*1.25)
+				print(sinnerman .. " I AM SIN2")
+				cameratilterman = maxnumbman*sinnerman
+			end
+		else
+			print("I AM ZERO BOYO")
+			local cameratiltermax = cameratilterman
+
+			local sinnerman = 1
+			local sinnerman2 = 0
+			for i = 10,1,-1 do
+				game:GetService("RunService").RenderStepped:Wait()
+				  if camerakill == true then return end
+				sinnerman = sinnerman-0.1
+				sinnerman2 = math.sin(sinnerman*1.25)
+				print(sinnerman .. " I AM SIN")
+				cameratilterman = cameratiltermax*sinnerman2
+			end
+			wait()
+			cameratilterman = 0
+		end
+	end))
 end
-end))
-
-te(ct,m.KeyUp:Connect(function(e)
-if e ==' ' then
-spacedown=false end
-if e =='w' then
-wdown=false end
-if e =='s' then
-sdown=false end
-if e =='a' then
-adown=false end
-if e =='d' then
-ddown=false
-end
-end))
-
-local function MoveClone(X,Y,Z)
-LVecPart.CFrame = LVecPart.CFrame * CFrame.new(-X,Y,-Z)
-reanim.Humanoid.WalkToPoint = LVecPart.Position
-end
-
-te(ct,srv.RenderStepped:Connect(function()
-if wdown==true then
-MoveClone(0,0,1e4) end
-if sdown==true then
-MoveClone(0,0,-1e4) end
-if adown==true then
-MoveClone(1e4,0,0) end
-if ddown==true then
-MoveClone(-1e4,0,0)
-end
-if spacedown==true then
-reanim.Humanoid.Jump=true end
-if wdown ~= true and adown ~= true and sdown ~= true and ddown ~= true then
-reanim.Humanoid.WalkToPoint = reanim.HumanoidRootPart.Position end
-end))
-
---reanim.HumanoidRootPart.RootJoint.Part1=nil
-
-workspace.CurrentCamera.CameraSubject = reanim.Humanoid
-
-reset=Instance.new('BindableEvent')
-te(ct,reset.Event:Connect(function()
-reanim:Destroy()
-HumanDied=true
-reanimated=false
-for i,v in next, char:GetDescendants() do if v:IsA('BasePart') then v.Anchored=true end end
-hc=char.Humanoid:Clone()
-char.Humanoid:Destroy()
-hc.Parent=char
-for i,v in pairs(ct) do v:Disconnect() end
-game:GetService("StarterGui"):SetCore("ResetButtonCallback", true)
-reset:Remove()
-end))
-
-game:GetService("StarterGui"):SetCore("ResetButtonCallback", reset)
 
 
+local rolldel =false
+function roll()
+    
+	if sliding == true then return end
+	if hitfloor == false then return end
+	if wallrunning == true then return end
+	if rolldel == true then return end
+	rolldel = true
+	randomclothrollsound(true)
+	rollingsound.TimePosition = 0.3
+	rollingsound:Play()
+	root.Velocity = Vector3.new(0,0,0)
+	local x, y, z = root.CFrame:ToEulerAnglesYXZ()
+	rollering = true
+tricksinarow = tricksinarow+1
+	local rollmancf = CFrame.new(Vector3.new(root.Position.X,floorpositiony+1.5,root.Position.Z))*CFrame.Angles(0, y, 0)
 
--- real script
+	root.CFrame = rollmancf
 
-local player = game:service("Players").LocalPlayer
-local mouse = player:GetMouse()
-local cam = workspace.CurrentCamera
-local char = reanim
-local Torsoz = char:findFirstChild("Torso")
-local RA = char:findFirstChild("Right Arm")
-local LA = char:findFirstChild("Left Arm")
-local RL = char:findFirstChild("Right Leg")
-local LL = char:findFirstChild("Left Leg")
-local H = char:findFirstChild("Head")
-local Hu = char:findFirstChild("Humanoid")
-local RS = Torsoz:findFirstChild("Right Shoulder")
-local LS = Torsoz:findFirstChild("Left Shoulder")
-local RH = Torsoz:findFirstChild("Right Hip")
-local LH = Torsoz:findFirstChild("Left Hip")
-local N = Torsoz:findFirstChild("Neck")
-local NV = Vector3.new(0,0,0)
-local FOV = 70
-local Shift, Space, Sitting = false,false,false
-local GravPoint = 0
-local Diving = false
-local DivingCooldown = 0
-local DivingDir = NV
-local DivingCF = CFrame.new(0,0,0)
-local DivingBG, DivingBV
-local HWallRunning = false
-local HWRGravDrop = false
-local HWRLastPart
-local HWRCooldown = 0
-local HWRDir
-local VWallRunning = false
-local VWRLastPart
-local VWRCooldown = 0
-local VWRLeft,VWRRight = false,false
-local Sliding = false
-local SlideCooldown = 0
-local Standing = true
-local Action = "Standing"
-local animplus = true
-local animspeed = 0
-local animangle = 0.01
-local Joint1, Joint2, Joint3, Joint4, Joint5
+	wait()
+	root.Velocity = Vector3.new(0,0,0)
 
-flingtarget = Torsoz
 
-for i, v in pairs(char:children()) do
-if (v.className == "LocalScript" and v.Name == "ParkourSkrip") or v.className == "NumberValue" or v.className == "BoolValue" or v.className == "Model" or v.Name == "Animate" then
-v:remove()
+	flow  = flow+(flowmax-flowmin)/8
+	runvel.Velocity = (root.CFrame.LookVector*hum.WalkSpeed)
+	local bp = Instance.new("BodyPosition",torso)
+	bp.Position = Vector3.new(0,floorpositiony,0)
+	bp.MaxForce = Vector3.new(0,999999999,0)
+	bp.P = 25000
+	hum.PlatformStand = true
+	runvel.MaxForce = Vector3.new(99999,99999,99999)
+	gyro.CFrame = rollmancf
+	gyro.P = 99999
+	gyro.MaxTorque = Vector3.new(99999,99999,99999)
+	rollplay:Play()
+	local lookcfog = cam.CFrame
+	local angle = 0
+	rollplay:AdjustSpeed(0)
+	rollplay.TimePosition = 1
+local rotatenumb = -18
+if gobackroll == true then
+rotatenumb = 18
 end
+
+	for i = 20,1,-1 do
+		rs.Heartbeat:Wait()
+		  if camerakill == true then return end
+runvel.MaxForce = Vector3.new(99999,99999,99999)
+runvel.Velocity = rollmancf.LookVector*-rotatenumb*3
+		gyro.CFrame =	gyro.CFrame*CFrame.Angles(math.rad(rotatenumb),0,0)
+		root.CFrame = gyro.CFrame
+	end
+runvel.MaxForce = Vector3.new(0,0,0)
+	rollplay:Stop()
+	hum.PlatformStand = false
+	rollering = false
+	bp:Destroy()
+	gyro.P = befpower
+	runvel.MaxForce = Vector3.new(0,0,0)
+	gyro.MaxTorque = Vector3.new(0,0,0)
+	root.Velocity = Vector3.new(0,0,0)
+	root.Velocity = Vector3.new(0,0,0)
+	rolldel = false
+if rotatenumb  == 18 then
+cam.CFrame = lookcfog 
 end
- 
-local loadids = {112474909, 112474911, 112474909}
- 
-local stamina = 10000
-local maxstamina = 10000
-local defsprint = 28
-local sprint = defsprint  
- 
-local pause = Instance.new("BoolValue", char)
-pause.Name = "Pause"
-pause.Value = false
-local flow = Instance.new("NumberValue", char)
-flow.Name = "Flow"
-flow.Value = 0
-local flowcooldown = 0
- 
-local m = Instance.new("Model", char)
-m.Name = "FlowChainPartz"
- 
-local P = Instance.new("Part")
-P.Name = "TrailPart"
-P.formFactor = "Custom"
-P.Size = Vector3.new(0.2,0.2,0.2)
-P.Locked = true
-P.Anchored = true
-P.CanCollide = false
-P.TopSurface = 0
-P.BottomSurface = 0
- 
-script.Name = "ParkourSkrip"
- 
-local hue = 0
- 
-function HSV(H,S,V)
-H = H % 360
-local C = V * S
-local H2 = H/60
-local X = C * (1 - math.abs((H2 %2) -1))
-local color = Color3.new(0,0,0)
-if H2 <= 0 then
-color = Color3.new(C,0,0)
-elseif 0 <= H2 and H2 <= 1 then
-color = Color3.new(C,X,0)
-elseif 1 <= H2 and H2 <= 2 then
-color = Color3.new(X,C,0)
-elseif 2 <= H2 and H2 <= 3 then
-color = Color3.new(0,C,X)
-elseif 3 <= H2 and H2 <= 4 then
-color = Color3.new(0,X,C)
-elseif 4 <= H2 and H2 <= 5 then
-color = Color3.new(X,0,C)
-elseif 5 <= H2 and H2 <= 6 then
-color = Color3.new(C,0,X)
+	wait()
+
 end
-local m = V - C
-return Color3.new(color.r + m, color.g + m, color.b + m)
-end
- 
-function GetWeld(weld)
-if weld:findFirstChild("XAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "XAngle"
-end
-if weld:findFirstChild("YAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "YAngle"
-end
-if weld:findFirstChild("ZAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "ZAngle"
-end
-return weld.C0.p, Vector3.new(weld.XAngle.Value, weld.YAngle.Value, weld.ZAngle.Value)
-end
- 
-function SetWeld(weld, i, loops, origpos,origangle, nextpos,nextangle)
-if weld:findFirstChild("XAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "XAngle"
-end
-if weld:findFirstChild("YAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "YAngle"
-end
-if weld:findFirstChild("ZAngle") == nil then
-local a = Instance.new("NumberValue", weld)
-a.Name = "ZAngle"
-end
- 
-local tox,toy,toz = 0,0,0
-if origangle.x > nextangle.x then
-tox = -math.abs(origangle.x - nextangle.x) /loops*i
-else
-tox = math.abs(origangle.x - nextangle.x) /loops*i
-end
-if origangle.y > nextangle.y then
-toy = -math.abs(origangle.y - nextangle.y) /loops*i
-else
-toy = math.abs(origangle.y - nextangle.y) /loops*i
-end
-if origangle.z > nextangle.z then
-toz = -math.abs(origangle.z - nextangle.z) /loops*i
-else
-toz = math.abs(origangle.z - nextangle.z) /loops*i
-end
- 
-local tox2,toy2,toz2 = 0,0,0
-if origpos.x > nextpos.x then
-tox2 = -math.abs(origpos.x - nextpos.x) /loops*i
-else
-tox2 = math.abs(origpos.x - nextpos.x) /loops*i
-end
-if origpos.y > nextpos.y then
-toy2 = -math.abs(origpos.y - nextpos.y) /loops*i
-else
-toy2 = math.abs(origpos.y - nextpos.y) /loops*i
-end
-if origpos.z > nextpos.z then
-toz2 = -math.abs(origpos.z - nextpos.z) /loops*i
-else
-toz2 = math.abs(origpos.z - nextpos.z) /loops*i
-end
- 
-weld.XAngle.Value = origangle.x + tox
-weld.YAngle.Value = origangle.y + toy
-weld.ZAngle.Value = origangle.z + toz
-weld.C0 = CFrame.new(origpos.x + tox2,origpos.y + toy2,origpos.z + toz2) * CFrame.Angles(origangle.x + tox,origangle.y + toy,origangle.z + toz)
-end
- 
-function LoadTextures()
-local pls = game:service("ContentProvider")
-for i, v in pairs(loadids) do
-pls:Preload("http://www.roblox.com/asset/?id="..v)
-wait(0.04)
-end
-end
-LoadTextures()
- 
-function CreateGui()
-for i, v in pairs(player.PlayerGui:children()) do
-if v.className == "ScreenGui" and v.Name == "staminaGui" then
-v:remove()
-end
-end
-local g = Instance.new("ScreenGui", player.PlayerGui)
-g.Name = "staminaGui"
- 
-local c = Instance.new("Frame", g)
-c.Visible = false
-c.Size = UDim2.new(0,86,0,320)
-c.BackgroundTransparency = 1
-c.Position = UDim2.new(1,-96,0.5,-160)
-c.Name = "Container"
- 
-local t = Instance.new("TextLabel", c)
-t.Size = UDim2.new(0,0,-0.1,0)
-t.Position = UDim2.new(0.3,0,0.5,0)
-t.TextXAlignment = "Right"
-t.Font = "ArialBold"
-t.TextTransparency = 0.1
-t.TextColor3 = Color3.new(0,0.6,0.8)
-t.TextStrokeColor3 = Color3.new(0,0.2,0.8)
-t.TextStrokeTransparency = 0.3
-t.FontSize = 6
-t.BackgroundTransparency = 1
-local t2 = t:Clone()
-t2.Parent = c
-t2.Size = UDim2.new(0,0,0.1,0)
-local l = t:Clone()
-l.Parent = c
-l.Size = UDim2.new(0,0,0,0)
-l.Text = "-----"
- 
-local f1 = Instance.new("Frame", c)
-f1.Name = "Backing"
-f1.ClipsDescendants = true
-f1.Size = UDim2.new(1,0,0,0)
-f1.BackgroundColor3 = Color3.new(0.8,0,0)
-f1.BackgroundTransparency = 1
-local f1img = Instance.new("ImageLabel", f1)
-f1img.BackgroundTransparency = 1
-f1img.Image = "http://www.roblox.com/asset/?id=112474909"
-f1img.Size = UDim2.new(1,0,0,c.Size.Y.Offset)
- 
-local f2 = Instance.new("Frame", c)
-f2.Name = "Overlay"
-f2.ClipsDescendants = true
-f2.Size = UDim2.new(1,0,1,0)
-f2.BackgroundColor3 = Color3.new(0,0,0.8)
-f2.BackgroundTransparency = 1
-local f2img = Instance.new("ImageLabel", f2)
-f2img.BackgroundTransparency = 1
-f2img.Image = "http://www.roblox.com/asset/?id=112474911"
-f2img.Size = UDim2.new(1,0,0,c.Size.Y.Offset)
- 
-function Calculate()
-local ysize = c.Size.Y.Offset
-local per = (stamina/maxstamina) * c.Size.Y.Offset
-local rem = (-(stamina/maxstamina-1)) * c.Size.Y.Offset
-f1.Size = UDim2.new(1,0,0,rem)
-f2.Size = UDim2.new(1,0,0,per)
-f2.Position = UDim2.new(0,0,0,rem)
-f2img.Position = UDim2.new(0,0,0,-rem)
-t.Text = math.floor(stamina)
-t2.Text = maxstamina
-end
-Calculate()
- 
-wait(0.01)
-c.Visible = true
-end
-CreateGui()
- 
-player.CharacterAdded:connect(function()
-char = player.Character
-Torsoz = char:findFirstChild("Torso")
-RA = char:findFirstChild("Right Arm")
-LA = char:findFirstChild("Left Arm")
-RL = char:findFirstChild("Right Leg")
-LL = char:findFirstChild("Left Leg")
-H = char:findFirstChild("Head")
-Hu = char:findFirstChild("Humanoid")
-RS = Torsoz:findFirstChild("Right Shoulder")
-LS = Torsoz:findFirstChild("Left Shoulder")
-RH = Torsoz:findFirstChild("Right Hip")
-LH = Torsoz:findFirstChild("Left Hip")
-N = Torsoz:findFirstChild("Neck")
-stamina = maxstamina
-CreateGui()
+
+
+local cdown = false
+
+UIS.InputBegan:Connect(function(input,g)
+
+	if input.KeyCode == Enum.KeyCode.C then
+		if g then return end
+		cdown = true
+
+	end
+	if input.KeyCode == Enum.KeyCode.P then
+	    if g then return end
+		hum:TakeDamage(1)
+	end
 end)
- 
-function RAY(pos, dir, startpos, endpos, distleft, collidedlist)
-collidedlist = collidedlist or {char}
-startpos = startpos or pos
-distleft = distleft or dir.unit * dir.magnitude
-endpos = endpos or pos + distleft
-local ray = Ray.new(pos, distleft)
-local hitz,enz = workspace:FindPartOnRayWithIgnoreList(ray, collidedlist)
---[[
-local p = P:Clone()
-p.Parent = char
-p.Size = Vector3.new(0.4,0.4,0.4)
-p.BrickColor = BrickColor.new("Lime green")
-p.CanCollide = false
-p.CFrame = CFrame.new(enz)
-p.Transparency = 0.3
-]]
-if hitz ~= nil then
-if hitz.CanCollide == false then
-table.insert(collidedlist, hitz)
-local newpos = enz
-local newdistleft = distleft - (dir.unit * (pos - newpos).magnitude)
-if newdistleft ~= NV then
-return RAY(newpos-(dir*0.01), dir, startpos, endpos, newdistleft+(dir*0.01), collidedlist)
-end
-end
-end
- 
-return hitz, enz, ray
-end
- 
-function Sit()
-Standing = false
-local hitz,enz = RAY(Torsoz.Position, Vector3.new(0,-4.1,0))
-local tordir = Vector3.new(Torsoz.CFrame.lookVector.x,0,Torsoz.CFrame.lookVector.z)
-if (hitz ~= nil and hitz.CanCollide == true) then
-local cf = CFrame.new(enz+Vector3.new(0,1.28,0), enz+Vector3.new(0,1.28,0)+tordir) * CFrame.Angles(math.pi/6,0,0)
-local hitz2,enz2 = RAY(enz+Vector3.new(0,2.25,0), tordir*-2.2)
-Hu.PlatformStand = true
-Torsoz.CFrame = cf
-local bp = Instance.new("BodyPosition", Torsoz)
-bp.Name = "StaminaBodyObject"
-bp.maxForce = Vector3.new(1/0,1/0,1/0)
-bp.D = 100
-bp.position = cf.p
-local bg = Instance.new("BodyGyro", Torsoz)
-bg.Name = "StaminaBodyObject"
-bg.maxTorque = Vector3.new(1/0,1/0,1/0)
-bg.cframe = cf
-bg.D = 100
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.34,-1,0.2), Vector3.new((math.pi/2)-(math.pi/6),0,math.pi/8))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.34,-1,0.2), Vector3.new((math.pi/2)-(math.pi/6),0,-math.pi/8))
- 
-if hitz2 ~= nil and hitz2.CanCollide == true then
-Joint3.C0 = CFrame.new(0.9,0.4,-0.45) * CFrame.Angles(0,math.pi/2.13,0) * CFrame.Angles(math.pi/2.3,0,0)
-Joint4.C0 = CFrame.new(-0.9,0.4,-0.4) * CFrame.Angles(0,-math.pi/2.05,0) * CFrame.Angles(math.pi/2.3,0,0)
-Joint5.C0 = CFrame.new(0,1,0) * CFrame.Angles(-math.pi/8.8,0,0)
-else
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.4,0.4,0.1), Vector3.new(-(math.pi/6)-(math.pi/10),0,math.pi/9))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.4,0.4,0.1), Vector3.new(-(math.pi/6)-(math.pi/10),0,-math.pi/9))
-SetWeld(Joint5,1,1, NV,NV, Vector3.new(0,1,0), Vector3.new(-math.pi/12,0,0))
-end
- 
-Sitting = true
-Action = "Sitting"
-end
-end
- 
- 
-function Stand()
-Hu.PlatformStand = false
-if Sitting == true then
-local tordir = Torsoz.Position + (Torsoz.CFrame.lookVector*10000)
-local cf = CFrame.new(Torsoz.Position + Vector3.new(0,1.8,0), Vector3.new(tordir.x,Torsoz.Position.y,tordir.z))
-Torsoz.CFrame = cf
-end
-for i, v in pairs(Torsoz:children()) do
-if v.Name == "StaminaBodyObject" then
-v:remove()
-end
-end
-RH.Part0 = nil
-LH.Part0 = nil
-RS.Part0 = nil
-LS.Part0 = nil
-Joint1.Part0 = Torsoz
-Joint1.Part1 = RL
-Joint1.C0 = CFrame.new(0.5,-1,0)
-Joint1.C1 = CFrame.new(0,1,0)
-Joint2.Part0 = Torsoz
-Joint2.Part1 = LL
-Joint2.C0 = CFrame.new(-0.5,-1,0)
-Joint2.C1 = CFrame.new(0,1,0)
-Joint3.Part0 = Torsoz
-Joint3.Part1 = RA
-Joint3.C0 = CFrame.new(1.5,0.5,0)
-Joint3.C1 = CFrame.new(0,0.5,0)
-Joint4.Part0 = Torsoz
-Joint4.Part1 = LA
-Joint4.C0 = CFrame.new(-1.5,0.5,0)
-Joint4.C1 = CFrame.new(0,0.5,0)
-Joint5.Part0 = Torsoz
-Joint5.Part1 = H
-Joint5.C0 = CFrame.new(0,1,0)
-Joint5.C1 = CFrame.new(0,-0.5,0)
-Sitting = false
-Diving = false
-Standing = true
-Action = "Standing"
-end
- 
---------------------------------------- Dive ----------------------------------
- 
-function Dive()
-stamina = stamina - 10
-flow.Value = flow.Value + 10
-if flow.Value > 100 then
-flow.Value = 100
-end
-Standing = false
-local dir = Vector3.new(Torsoz.CFrame.lookVector.x,0,Torsoz.CFrame.lookVector.z)
-GravPoint = 18
-DivingDir = dir
-local cf = CFrame.new(Torsoz.Position, dir+Vector3.new(0,Torsoz.Position.y,0))
-DivingCF = cf
-DivingDir = dir
-Hu.PlatformStand = true
-local bv = Instance.new("BodyVelocity", Torsoz)
-bv.Name = "StaminaBodyObject"
-bv.maxForce = Vector3.new(1/0,1/0,1/0)
-bv.velocity = Vector3.new(DivingDir.x*24,GravPoint,DivingDir.z*24)
-DivingBV = bv
-local bg = Instance.new("BodyGyro", Torsoz)
-bg.Name = "StaminaBodyObject"
-bg.maxTorque = Vector3.new(1/0,1/0,1/0)
-bg.cframe = CFrame.new(Torsoz.Position, Torsoz.Position+bv.velocity) * CFrame.Angles(-math.pi/2,0,0)
-bg.D = 100
-DivingBG = bg
- 
-local joint = Joint3
-joint.C1 = CFrame.new(0,0.5,0)
-local joint2 = Joint4
-joint2.C1 = CFrame.new(0,0.5,0)
-local joint3 = Joint1
-joint3.C1 = CFrame.new(0,1,0)
-local joint4 = Joint2
-joint4.C1 = CFrame.new(0,1,0)
- 
-local joint5 = Joint5
- 
-Diving = true
-Action = "Diving"
- 
-for i = 1, 8 do
-SetWeld(joint,i,8, Vector3.new(1.5,0.5,0), NV, Vector3.new(1.45,0.5,0.1), Vector3.new(-0.2,-math.pi/9,math.pi/13))
-SetWeld(joint2,i,8, Vector3.new(-1.5,0.5,0), NV, Vector3.new(-1.45,0.5,0.1), Vector3.new(-0.2,math.pi/9,-math.pi/13))
-SetWeld(joint3,i,8, Vector3.new(0.5,-1,0), NV, Vector3.new(0.5,-1,0.03), Vector3.new(-0.2,-math.pi/10,math.pi/14))
-SetWeld(joint4,i,8, Vector3.new(-0.5,-1,0), NV, Vector3.new(-0.5,-1,0.03), Vector3.new(-0.2,math.pi/10,-math.pi/14))
-SetWeld(joint5,i,8, Vector3.new(0,1,0), NV, Vector3.new(0,1,0), Vector3.new(0.45,0,0))
-wait(0.025)
-end
- 
-local counter = 0
-while Diving == true do
-counter = counter + 1
-bg.Parent = Torsoz
-local hitz, enz = RAY(Torsoz.Position, bv.velocity.unit*4.6)
-if hitz ~= nil and hitz.CanCollide == true then
-local hitz2, enz2 = RAY(Torsoz.Position, Vector3.new(0,-4,0))
-if hitz2 ~= nil then
-Diving = "Rolling"
-Action = "DiveRolling"
-else
-Torsoz.CFrame = Torsoz.CFrame * CFrame.new(0,-0.3,0)
-Torsoz.Velocity = NV
-flow.Value = 0
-break
-end
-end
-if counter > 190 then
-break
-end
-wait(0.02)
-end
- 
-bv.velocity = (dir*20) + Vector3.new(0,-0.5,0)
- 
-local bgcf = bg.cframe
-local haslanded = false
-local count = 0
- 
-while haslanded == false do
-bg.cframe = bgcf * CFrame.Angles(-0.3*count,0,0)
-local hitz, enz = RAY(Torsoz.Position, ((Torsoz.CFrame*CFrame.new(0,-1,0)).p - Torsoz.CFrame.p).unit*1.6)
-if hitz ~= nil and hitz.CanCollide == true then
-haslanded = true
-end
-local hitz2, enz2 = RAY(Torsoz.Position, Vector3.new(0,-3.8,0))
-if hitz2 == nil then
-Torsoz.Velocity = NV
-break
-elseif haslanded == true then
-local bp = Instance.new("BodyPosition", Torsoz)
-bp.Name = "StaminaJumpFix"
-bp.maxForce = Vector3.new(0,1/0,0)
-bp.P = 7000
-bp.position = enz2 + Vector3.new(0,2.8,0)
-game:service("Debris"):AddItem(bp, 0.3)
-else
-bv.velocity = (dir*20) + Vector3.new(0,-(Torsoz.Position - enz2).magnitude*3,0)
- 
-end
-count = count + 1
-if count <= 6 then
-local i = count
-local j1,j1a = GetWeld(joint)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
-SetWeld(joint,i,6, j1,j1a, Vector3.new(1.35,0.5,-0.2), Vector3.new(math.pi/2.6,0,-math.pi/5.8))
-SetWeld(joint2,i,6, j2,j2a, Vector3.new(-1.35,0.5,-0.2), Vector3.new(math.pi/2.6,0,math.pi/5.8))
-SetWeld(joint3,i,6, j3,j3a, Vector3.new(0.51,0.4,-0.6), Vector3.new(-0.1,0,0.05))
-SetWeld(joint4,i,6, j4,j4a, Vector3.new(-0.51,0.4,-0.6), Vector3.new(-0.1,0,-0.05))
-SetWeld(joint5,i,6, j5,j5a, Vector3.new(0,1,0), Vector3.new(-0.4,0,0))
-elseif count >= 50 then
-break
-end
-wait(0.02)
-end
- 
-Torsoz.Velocity = NV
- 
-Stand()
-DivingCooldown = 9
-end
- 
-function FindSurface(part, position)
-local obj = part.CFrame:pointToObjectSpace(position)
-local siz = part.Size/2
-for i,v in pairs(Enum.NormalId:GetEnumItems()) do
-local vec = Vector3.FromNormalId(v)
-local wvec = part.CFrame:vectorToWorldSpace(vec)
-local vz = (obj)/(siz*vec)
-if (math.abs(vz.X-1) < 0.01 or math.abs(vz.Y-1) < 0.01 or math.abs(vz.Z-1) < 0.01) then
-return wvec,vec
-end
-end
-if part.className == "WedgePart" then
-return part.CFrame:vectorToWorldSpace(Vector3.new(0,0.707,-0.707)), Vector3.new(0,0.707,-0.707)
-end
-end
- 
-function HWallRun(part, pos, side)
-if (part.className == "Part" and part.Shape == Enum.PartType.Block) or part.className ~= "Part" then
-flow.Value = flow.Value + 9
-Standing = false
-HWallRunning = true
-Action = "HWallRunning"
-GravPoint = 10
-HWRLastPart = part
-local dir, dirc = FindSurface(part, pos)
-towall = -dir
-dir = (CFrame.new(NV, dir) * CFrame.Angles(0,side,0)).lookVector
- 
-local bv = Instance.new("BodyVelocity", Torsoz)
-bv.Name = "StaminaBodyObject"
-bv.maxForce = Vector3.new(1/0,1/0,1/0)
-bv.P = 9000
-bv.velocity = (dir*(sprint-0.5)) + Vector3.new(0,GravPoint,0)
-local bg = Instance.new("BodyGyro", Torsoz)
-bg.Name = "StaminaBodyObject"
-bg.maxTorque = Vector3.new(1/0,1/0,1/0)
-bg.cframe = CFrame.new(Torsoz.Position+(towall*-2), Torsoz.Position) * CFrame.Angles(0,-side,-side/4.2)
-bg.D = 100
- 
-local sid = Instance.new("Snap")
- 
-local joint1 = Joint3
-if side == -math.pi/2 then
-SetWeld(joint1,1,1, NV,NV, Vector3.new(1.5,0.5,0), Vector3.new(math.pi/1.3,0.1,math.pi/2.5))
-else
-sid = joint1
-SetWeld(joint1,1,1, NV,NV, Vector3.new(1.4,0.6,0), Vector3.new(-math.pi/12,0,math.pi/7))
-end
-local j1c0 = joint1.C0
- 
-local joint2 = Joint4
-if side == math.pi/2 then
-SetWeld(joint2,1,1, NV,NV, Vector3.new(-1.5,0.5,0), Vector3.new(math.pi/1.3,-0.1,-math.pi/2.5))
-else
-sid = joint2
-SetWeld(joint2,1,1, NV,NV, Vector3.new(-1.4,0.6,0), Vector3.new(-math.pi/12,0,-math.pi/7))
-end
-local j2c0 = joint2.C0
- 
-local joint3 = Joint1
-joint3.C1 = CFrame.new(0,1,0)
-if side == -math.pi/2 then
-SetWeld(joint3,1,1, NV,NV, Vector3.new(0.5,-0.38,-0.3), Vector3.new(0,math.pi/2,0.14))
-else
-SetWeld(joint3,1,1, NV,NV, Vector3.new(0.5,-0.8,-0.2), Vector3.new(0,math.pi/2,0.2))
-end
- 
-local joint4 = Joint2
-joint4.C1 = CFrame.new(0,1,0)
-if side == -math.pi/2 then
-SetWeld(joint4,1,1, NV,NV, Vector3.new(-0.5,-0.8,-0.2), Vector3.new(0,0,0.2))
-else
-SetWeld(joint4,1,1, NV,NV, Vector3.new(-0.5,-0.38,-0.3), Vector3.new(0,0,0.14))
-end
- 
-local joint5 = Joint5
-SetWeld(joint5,1,1,NV,NV,Vector3.new(0,0.9,0),Vector3.new(0,0,side/7))
- 
-Torsoz.CFrame = CFrame.new(pos+(towall*-2), pos) * CFrame.Angles(0,-side,-side/2.2)
-bg.cframe = CFrame.new(pos+(towall*-2), pos) * CFrame.Angles(0,-side,-side/2.2)
- 
-local aniangle = 0
-local aniplus = true
-local aniangle2 = 0
-local aniplus2 = true
- 
-local prevpart = part
-HWRLastPart = part
-while HWallRunning == true do
- 
-if aniangle > math.pi then
-aniplus = false
-elseif aniangle < -math.pi then
-aniplus = true  
-end
-if aniplus == true then
-aniangle = aniangle + 0.95
-elseif aniplus == false then
-aniangle = aniangle - 0.95
-end
- 
-if aniangle2 > math.pi then
-aniplus2 = false
-elseif aniangle2 < -math.pi then
-aniplus2 = true  
-end
-if aniplus2 == true then
-aniangle2 = aniangle2 + 0.23
-elseif aniplus2 == false then
-aniangle2 = aniangle2 - 0.23
-end
- 
-Hu.PlatformStand = true
-local hitz, enz = RAY(Torsoz.Position, Vector3.new(0,-3,0))
-local hitz2, enz2 = RAY(Torsoz.Position, towall*3.4)
- 
---- if player ends wall run on ground
-if hitz ~= nil and hitz.CanCollide == true then
-bg.cframe = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side,0)
-local offset = (bg.cframe.p.y+enz2.y) - bg.cframe.p.y
-Torsoz.CFrame = CFrame.new(Vector3.new(bg.cframe.p.x,offset,bg.cframe.p.z), enz2) * CFrame.Angles(0,-side,0)
-Torsoz.Velocity = NV
-break
-end
- 
----- if new wall found --------
-if hitz2 ~= nil and hitz2.CanCollide == true then
-if hitz2 ~= prevpart then
-local direct = CFrame.new(Torsoz.Position, Torsoz.Position+dir) * CFrame.Angles(0,side,0)
-local hitz3, enz3 = RAY(Torsoz.Position, (direct * CFrame.Angles(0,-side/2.3,0)).lookVector*4)
-if hitz3 ~= nil then
-Torsoz.CFrame = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side*1.1,-side/2.2)
-bg.cframe = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side*1.1,-side/2.2)
-dir, dirc = FindSurface(hitz2, enz2)
-towall = -dir
-dir = (CFrame.new(NV, dir) * CFrame.Angles(0,side,0)).lookVector
-prevpart = hitz2
-HWRLastPart = hitz2
-else
----- if player fails to find new wall to run on
-Torsoz.CFrame = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-bg.cframe = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-Torsoz.Velocity = NV
-HWRCooldown = 5
-break
-end
-end
---- continue to wall run
-Torsoz.CFrame = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side,-side/2.2)
-bg.cframe = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side,-side/2.2)
-else
----- if player ends wall run at end of wall
-Torsoz.CFrame = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-bg.cframe = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-Torsoz.Velocity = NV
-HWRCooldown = 5
-break
-end
- 
-local hitz3, enz3 = RAY(Torsoz.Position, Torsoz.CFrame.lookVector*2)
-if hitz3 ~= nil and hitz3.CanCollide == true then
-Torsoz.CFrame = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-bg.cframe = CFrame.new(Torsoz.Position, Torsoz.Position+dir)
-Torsoz.Velocity = NV
-HWRCooldown = 5
-break
-end
- 
-bv.Parent = Torsoz
-bv.velocity = (dir*(sprint-0.5)) + Vector3.new(0,GravPoint,0)
-bg.cframe = bg.cframe * CFrame.Angles(aniangle/80,aniangle/80,0)
-Torsoz.CFrame = Torsoz.CFrame * CFrame.Angles(aniangle/80,aniangle/80,0)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-SetWeld(joint3,1,1, j3,j3a, j3,Vector3.new(-0.2+(aniangle/4),0,0))
-SetWeld(joint4,1,1, j4,j4a, j4,Vector3.new(-0.2+(-aniangle/4),0,0))
-if side == math.pi/2 then
-local j1,j1a = GetWeld(joint1)
-SetWeld(joint1,1,1, j1,j1a, j1, Vector3.new(0,0,0.8+(aniangle2/14)))
-else
-local j2,j2a = GetWeld(joint2)
-SetWeld(joint2,1,1, j2,j2a, j2, Vector3.new(0,0,-0.8-(aniangle2/14)))
-end
- 
-wait(0.025)
-if GravPoint < -100 then
-bg.cframe = CFrame.new(enz2+(towall*-2), enz2) * CFrame.Angles(0,-side,0)
-local offset = math.abs((bg.cframe.p.y+enz2.y) - bg.cframe.p.y)
-Torsoz.CFrame = CFrame.new(Vector3.new(bg.cframe.p.x,offset,bg.cframe.p.z), enz2) * CFrame.Angles(0,-side,0)
-break
-end
- 
-end
- 
-if HWallRunning == "Jumping" then
-HWRCooldown = 6
-joint1.C1 = CFrame.new(0,0.5,0)
- 
-joint2.C1 = CFrame.new(0,0.5,0)
-if side == -math.pi/2 then
-joint2.C0 = CFrame.new(-1.35,0.5,0) * CFrame.Angles(0,side/2.4,-math.pi/3)
-else
-joint2.C0 = CFrame.new(-1.35,0.5,0) * CFrame.Angles(0,side/2.4,-math.pi/4)
-end
- 
-joint3.C1 = CFrame.new(0,1,0)
-if side == -math.pi/2 then
-joint3.C0 = CFrame.new(0.5,-0.8,0) * CFrame.Angles(0,math.pi+(side/2.4),-math.pi/4)
-else
-joint3.C0 = CFrame.new(0.5,-0.8,0) * CFrame.Angles(0,(side/2.4),math.pi/4)
-end
-joint4.MaxVelocity = 10
-joint4.DesiredAngle = 0
-joint4.C1 = CFrame.new(0,1,0)
-if side == -math.pi/2 then
-joint4.C0 = CFrame.new(-0.5,-0.8,0) * CFrame.Angles(0,math.pi+(side/2.4),math.pi/4)
-else
-joint4.C0 = CFrame.new(-0.5,-0.8,0) * CFrame.Angles(0,(side/2.4),-math.pi/4)
-end
- 
-local joint5 = Joint5
-joint5.C1 = CFrame.new(0,-0.5,0) * CFrame.Angles(0,side/2.4,0)
-joint5.C0 = CFrame.new(0,1,0)
- 
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
- 
-GravPoint = 26
-local collidecount = 0
-local bgangle = side/2
-local count = 1
-local dir2 = (CFrame.new(NV, dir) * CFrame.Angles(0,-side/2.4,0)).lookVector
-HWRDir = dir2
-bv.velocity = (dir2*(sprint+5)) + Vector3.new(0,GravPoint,0)
-while HWallRunning == "Jumping" do
-local hitz, enz = RAY(Torsoz.Position, Vector3.new(0,-4,0))
-local hitz2, enz2 = RAY(Torsoz.Position, dir2*1.4)
-if hitz ~= nil and hitz.CanCollide == true then
-local offset = math.abs(enz.y - Torsoz.CFrame.p.y)
-Torsoz.CFrame = CFrame.new(enz+Vector3.new(0,2.9,0), enz+Vector3.new(0,2.9,0)+dir2)
-Torsoz.Velocity = NV
-break
-end
- 
-if hitz2 ~= nil and hitz2.CanCollide == true then
-collidecount = collidecount + 1
-if collidecount == 4 then
-Torsoz.CFrame = CFrame.new(Torsoz.Position, Torsoz.Position+dir2) * CFrame.new(0,0,0.4)
-Torsoz.Velocity = Vector3.new(0,Torsoz.Velocity.y,0)
-HWRCooldown = 5
-VWRCooldown = 5
-wait(0.02)
-break
-end
-end
- 
-if side/2 > 0 then
-if bgangle > 0.2 then
-bgangle = bgangle - 0.055
-end
-else
-if bgangle < -0.2 then
-bgangle = bgangle + 0.055
-end
-end
- 
-if count <= 5 then
-if side == -math.pi/2 then
-SetWeld(joint1,count,5, j1,j1a, Vector3.new(1.35,0.5,0), Vector3.new(0,side/2.4,math.pi/4))
-SetWeld(joint2,count,5, j2,j2a, Vector3.new(-1.35,0.5,0), Vector3.new(0,side/2.4,-math.pi/3))
-SetWeld(joint3,count,5, j3,j3a, Vector3.new(0.5,-0.8,0), Vector3.new(0,-side/1.7,0))
-joint3.C0 = joint3.C0 * CFrame.Angles((-math.pi/4)/5*count,0,0)
-SetWeld(joint4,count,5, j4,j4a, Vector3.new(-0.5,-0.8,0), Vector3.new(0,-side/1.7,0))
-joint4.C0 = joint4.C0 * CFrame.Angles((math.pi/4)/5*count,0,0)
-else
-SetWeld(joint1,count,5, j1,j1a, Vector3.new(1.35,0.5,0), Vector3.new(0,side/2.4,math.pi/3))
-SetWeld(joint2,count,5, j2,j2a, Vector3.new(-1.35,0.5,0), Vector3.new(0,side/2.4,-math.pi/4))
-SetWeld(joint3,count,5, j3,j3a, Vector3.new(0.5,-0.8,0), Vector3.new(0,-side/1.7,0))
-joint3.C0 = joint3.C0 * CFrame.Angles((math.pi/4)/5*count,0,0)
-SetWeld(joint4,count,5, j4,j4a, Vector3.new(-0.5,-0.8,0), Vector3.new(0,-side/1.7,0))
-joint4.C0 = joint4.C0 * CFrame.Angles((-math.pi/4)/5*count,0,0)
-end
- 
-count = count + 1
-end
- 
-bg.Parent = Torsoz
-bg.cframe = CFrame.new(NV, dir) * CFrame.Angles(0,side/15,-bgangle)
-bv.velocity = (dir2*(sprint+5)) + Vector3.new(0,GravPoint,0)
-if collidecount ~= 0 then
-bv.velocity = Vector3.new(0,bv.velocity.y,0)
-end
-if GravPoint < -120 then
-break
-end
-wait(0.025)
-end
-end
- 
-Hu.PlatformStand = false
-bv:remove()
- 
-HWRGravDrop = false
-Stand()
-HWallRunning = false
-end
-end
- 
-function VWR(part, pos)
-if (part.className == "Part" and part.Shape == Enum.PartType.Block) or part.className ~= "Part" then
-print("VWR Activated")
-flow.Value = flow.Value + 9
-Standing = false
-VWallRunning = true
-Action = "VWallRunning"
-GravPoint = 0
-local percent = 1
-VWRLastPart = part
-local dir, dirc = FindSurface(part, pos)
-towall = -dir
-dir = (CFrame.new(NV, -dir) * CFrame.Angles(math.pi/2,0,0)).lookVector
---[[
-local p = P:Clone()
-p.Parent = char
-p.Size = Vector3.new(2,2,2)
-p.BrickColor = BrickColor.new("Lime green")
-p.CanCollide = false
-p.CFrame = part.CFrame * CFrame.new(dirc*5)
-p.Transparency = 0.3
-]]
-local bv = Instance.new("BodyVelocity", Torsoz)
-bv.Name = "StaminaBodyObject"
-bv.maxForce = Vector3.new(1/0,1/0,1/0)
-bv.P = 9000
-bv.velocity = (dir*(sprint-1))*percent
- 
-local bg = Instance.new("BodyGyro", Torsoz)
-bg.Name = "StaminaBodyObject"
-bg.maxTorque = Vector3.new(1/0,1/0,1/0)
-bg.D = 100
-local posi = pos + (-towall*1.8)
-bg.cframe = CFrame.new(posi, posi+towall) * CFrame.Angles((math.pi/5),0,0)
-Torsoz.CFrame = CFrame.new(posi, posi+towall) * CFrame.Angles((math.pi/5),0,0)
- 
-local joint1 = Joint3
-SetWeld(joint1,1,1, NV,NV, Vector3.new(1.4,0.45,-0.1), Vector3.new(-math.pi/3.2,0,math.pi/8))
- 
-local joint2 = Joint4
-SetWeld(joint2,1,1, NV,NV, Vector3.new(-1.4,0.45,-0.1), Vector3.new(-math.pi/3.2,0,-math.pi/8))
- 
-local joint3 = Joint1
-SetWeld(joint3,1,1, NV,NV, Vector3.new(0.48,-0.6,-0.1), Vector3.new(0,math.pi/2,0))
-joint3.C1 = CFrame.new(0,0.7,0.2) * CFrame.Angles(0,math.pi/2,0)
- 
-local joint4 = Joint2
-SetWeld(joint4,1,1, NV,NV, Vector3.new(-0.48,-0.6,-0.1), Vector3.new(0,math.pi/2,0))
-joint4.C1 = CFrame.new(0,0.7,0.2) * CFrame.Angles(0,math.pi/2,0)
- 
-local joint5 = Joint5
-SetWeld(joint5,1,1, NV,NV, Vector3.new(0,1,0), Vector3.new(math.pi/20,0,0))
- 
-local aniangle = 0
-local aniplus = true
- 
-while VWallRunning == true do
-local hitz, enz = RAY(Torsoz.Position, towall*2.1)
-local hitz2, enz2 = RAY(Torsoz.Position, (CFrame.new(NV,towall)*CFrame.Angles(math.pi/2,0,0)).lookVector*2.4)
- 
-if aniangle > math.pi then
-aniplus = false
-elseif aniangle < -math.pi then
-aniplus = true  
-end
-if aniplus == true then
-aniangle = aniangle + (1.3*(percent+0.2))
-elseif aniplus == false then
-aniangle = aniangle - (1.3*(percent+0.2))
-end
- 
-bv.velocity = (dir*(sprint-1))*percent
-if VWRLeft == true then
-bv.velocity = bv.velocity + ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * (11*percent+5))
-end
-if VWRRight == true then
-bv.velocity = bv.velocity - ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * (11*percent+5))
-end
- 
-bg.cframe = CFrame.new(posi, posi+towall) * CFrame.Angles((math.pi/5),0,0) * CFrame.Angles(0,aniangle/60,0)
- 
-SetWeld(joint1,1,1, NV,NV, Vector3.new(1.4,0.45,-0.1), Vector3.new(-math.pi/3.2,aniangle/52,(math.pi/8)+(aniangle/30)))
-SetWeld(joint2,1,1, NV,NV, Vector3.new(-1.4,0.45,-0.1), Vector3.new(-math.pi/3.2,aniangle/52,(-math.pi/8)+(-aniangle/30)))
-SetWeld(joint3,1,1, NV,NV, Vector3.new(0.51,-0.75,-(aniangle/30)), Vector3.new(0,math.pi/2,(aniangle/8)-0.3))
-SetWeld(joint4,1,1, NV,NV, Vector3.new(-0.51,-0.75,(aniangle/30)), Vector3.new(0,math.pi/2,(-aniangle/8)-0.3))
- 
-if hitz == nil then
-local lv = Torsoz.Position + (Torsoz.CFrame.lookVector*100)
-Torsoz.CFrame = CFrame.new(Torsoz.Position, Vector3.new(lv.x,Torsoz.Position.y,lv.z))
-break
-end
- 
-if hitz2 ~= nil then
-percent = 0
-VWallRunning = "Falling"
-Action = "VWRFalling"
-GravPoint = -7
-break
-end
- 
-wait(0.02)
-percent = percent - 0.028
-if percent <= 0.15 then
-VWallRunning = "Falling"
-Action = "VWRFalling"
-end
-end
- 
--------------------------- Falling from VWR ------------------------------
-if VWallRunning == "Falling" then
-GravPoint = GravPoint - 1
-local dirpos = (-towall *5) + Vector3.new(0,GravPoint,0)
-bv.velocity = CFrame.new(NV, dirpos).lookVector * dirpos.magnitude
- 
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
- 
-local counter = 0
-while VWallRunning == "Falling" do
-counter = counter + 1
-local hitz, enz = RAY(H.Position, Vector3.new(0,-2.4,0))
- 
-dirpos = (-towall *5) + Vector3.new(0,GravPoint,0)
-bv.velocity = CFrame.new(NV, dirpos).lookVector * dirpos.magnitude
-if VWRLeft == true then
-bv.velocity = bv.velocity + ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * 9)
-end
-if VWRRight == true then
-bv.velocity = bv.velocity - ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * 9)
-end
-bg.cframe = CFrame.new(NV, (-towall*30) + Vector3.new(0,GravPoint,0)) * CFrame.Angles(-math.pi/2.55,math.pi,0)
- 
-if counter <= 35 then
-SetWeld(joint1,counter,35, j1,j1a, Vector3.new(1.4,0.45,-0.1), Vector3.new(math.pi/9,0,math.pi/9))
-SetWeld(joint2,counter,35, j2,j2a, Vector3.new(-1.4,0.45,-0.1), Vector3.new(math.pi/9,0,-math.pi/9))
-SetWeld(joint3,counter,35, j3,j3a, Vector3.new(0.5,-0.75,0), Vector3.new(0,math.pi/2,math.pi/9))
-joint3.C1 = CFrame.new(0,0.7 + (0.3/35*counter),0.2 - (0.2/35*counter)) * CFrame.Angles(0,math.pi/2,0)
-SetWeld(joint4,counter,35, j4,j4a, Vector3.new(-0.5,-0.75,0), Vector3.new(0,math.pi/2,math.pi/9))
-joint4.C1 = CFrame.new(0,0.7 + (0.3/35*counter),0.2 - (0.2/35*counter)) * CFrame.Angles(0,math.pi/2,0)
-SetWeld(joint5,counter,35, j5,j5a, Vector3.new(0,1,0), Vector3.new(-math.pi/6,0,0))
-end
- 
-if hitz ~= nil then
-bv:remove()
-Torsoz.CFrame = CFrame.new(enz+Vector3.new(0,2,0), (enz+Vector3.new(0,2,0)) + ((-towall*25) + Vector3.new(0,GravPoint,0))) * CFrame.Angles(-math.pi/2.55,math.pi,0)
-Torsoz.Velocity = NV
-Torsoz.RotVelocity = NV
-local bp = Instance.new("BodyPosition", Torsoz)
-bp.maxForce = Vector3.new(1/0,1/0,1/0)
-bp.position = Torsoz.CFrame.p
-game:service("Debris"):AddItem(bp, 0.16)
-flow.Value = 0
-break
-end
- 
-if GravPoint > - 180 then
-GravPoint = GravPoint - 1.9
-end
-if counter > 200 then
-break
-end
-wait(0.02)
-end
- 
-local bp = Instance.new("BodyPosition")
- 
-local counter2 = counter
-local bgangleplus = 0
- 
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
- 
-local landingpos
- 
-while VWallRunning == "BackflipFromFall" do
-counter2 = counter2 + 1
-local hitz, enz = RAY(H.Position+Vector3.new(0,2,0), Vector3.new(0,-4.4,0))
- 
-if counter2 - counter < 13 then
-bgangleplus = bgangleplus - ((math.pi*1.1)/13)
-end
-if counter2 - counter <= 13 then
-SetWeld(joint1,counter2-counter,13, j1,j1a, Vector3.new(1.4,0.5,0.1), Vector3.new(math.pi/2,0.1,math.pi/2))
-SetWeld(joint2,counter2-counter,13, j2,j2a, Vector3.new(-1.4,0.5,0.1), Vector3.new(math.pi/2,-0.1,-math.pi/2))
-SetWeld(joint3,counter2-counter,13, j3,j3a, Vector3.new(0.52,-0.3,-0.65), Vector3.new(0,math.pi/2,0))
-SetWeld(joint4,counter2-counter,13, j4,j4a, Vector3.new(-0.51,-0.9,-0.05), Vector3.new(0,math.pi/2,0))
-SetWeld(joint5,counter2-counter,13, j5,j5a, Vector3.new(0,0.9,0), Vector3.new(-math.pi/7,0,0))
-end
- 
-dirpos = (-towall *5) + Vector3.new(0,GravPoint,0)
---bv.velocity = Vector3.new(0,-2,0)
-bv.velocity = CFrame.new(NV, dirpos).lookVector * dirpos.magnitude
-if VWRLeft == true then
-bv.velocity = bv.velocity + ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * 9)
-end
-if VWRRight == true then
-bv.velocity = bv.velocity - ((CFrame.new(NV, towall) * CFrame.Angles(0,math.pi/2,0)).lookVector * 9)
-end
-bg.cframe = CFrame.new(NV, (-towall*30) + Vector3.new(0,GravPoint,0)) * CFrame.Angles((-math.pi/2.4) + bgangleplus,math.pi,0)
- 
-if hitz ~= nil then
-bv:remove()
-landingpos = enz - (towall*1.3)
-if counter2 - counter > 8 then
-bp = Instance.new("BodyPosition", Torsoz)
-bp.maxForce = Vector3.new(1/0,1/0,1/0)
-bp.position = enz+Vector3.new(0,2.4,0) + (-towall*1)
-VWallRunning = "LandingFall"
-else
-Torsoz.CFrame = bg.cframe + (enz+Vector3.new(0,2.3,0))
-Torsoz.Velocity = NV
-Torsoz.RotVelocity = NV
-local bp = Instance.new("BodyPosition", Torsoz)
-bp.maxForce = Vector3.new(1/0,1/0,1/0)
-bp.position = Torsoz.CFrame.p
-game:service("Debris"):AddItem(bp, 0.14)
-flow.Value = 0
-end
-break
-end
- 
-if GravPoint > - 180 then
-GravPoint = GravPoint - 1.9
-end
-if counter2 > 200 then
-break
-end
-wait(0.02)
-end
- 
-if VWallRunning == "LandingFall" then
-print("Landing")
- 
-joint3.C1 = CFrame.new(0,1,0) * CFrame.Angles(0,math.pi/2,0)
-joint4.C1 = CFrame.new(0,1,0) * CFrame.Angles(0,math.pi/2,0)
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
- 
-local a
-local mesh
-if GravPoint < -70 then
-a = P:Clone()
-a.Parent = Torsoz
-a.Name = "AirLandingEffect"
-a.BrickColor = BrickColor.new("Medium stone grey")
-a.Transparency = 0.3
-a.CFrame = CFrame.new(landingpos+Vector3.new(0,0.4,0))
-mesh = Instance.new("SpecialMesh", a)
-mesh.MeshId = "http://www.roblox.com/asset/?id=20329976"
-mesh.Scale = Vector3.new(0,0,0)
-end
- 
-local bgcf = CFrame.new(NV, Vector3.new(towall.x,0,towall.z))
-bg.cframe = bgcf * CFrame.Angles(-math.pi/7,0,0)
-local bgval = math.pi/7/2
- 
-for i = 1, 6 do
-Hu.PlatformStand = true
-SetWeld(joint1,i,6, j1,j1a, Vector3.new(1.2,0.5,0.2), Vector3.new(math.pi/2,0.5,math.pi/1.2))
-SetWeld(joint2,i,6, j2,j2a, Vector3.new(-1.2,0.5,0.2), Vector3.new(math.pi/2,-0.5,-math.pi/1.2))
-SetWeld(joint3,i,6, j3,j3a, Vector3.new(0.51,-0.3,-0.8), Vector3.new(0,math.pi/2,-math.pi/7))
-SetWeld(joint4,i,6, j4,j4a, Vector3.new(-0.51,-0.8,-0.7), Vector3.new(0,math.pi/2,-math.pi/3))
-SetWeld(joint5,i,6, j5,j5a, Vector3.new(0,0.85,0), Vector3.new(-math.pi/8,0,0))
-bp.position = bp.position + Vector3.new(0,-0.07,0)
-bg.cframe = bgcf * CFrame.Angles((-bgval*2) + (bgval/6*i),0,0)
-Torsoz.CFrame = bg.cframe + bp.position
-if a ~= nil then
-mesh.Scale = mesh.Scale + Vector3.new(1.3,0.35,1.3)
-a.Transparency = 0.3 + (0.7/6*i)
-end
-wait(0.02)
-end
-if a ~= nil then
-a:remove()
-end
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
-for i = 1, 6 do
-Hu.PlatformStand = true
-SetWeld(joint1,i,6, j1,j1a, Vector3.new(1.5,0.5,0), Vector3.new(0,0,0))
-SetWeld(joint2,i,6, j2,j2a, Vector3.new(-1.5,0.5,0), Vector3.new(0,0,0))
-SetWeld(joint3,i,6, j3,j3a, Vector3.new(0.5,-1,0), Vector3.new(0,math.pi/2,0))
-SetWeld(joint4,i,6, j4,j4a, Vector3.new(-0.5,-1,0), Vector3.new(0,math.pi/2,0))
-SetWeld(joint5,i,6, j5,j5a, Vector3.new(0,1,0), Vector3.new(0,0,0))
-bp.position = bp.position + Vector3.new(0,0.1,0)
-bg.cframe = bgcf * CFrame.Angles(-bgval + (bgval/6*i),0,0)
-Torsoz.CFrame = bg.cframe + bp.position
-wait(0.02)
-end
- 
-bp:remove()
-end
- 
-end
- 
-bv:remove()
-bg:remove()
-VWallRunning = false
-Stand()
-end
-end
- 
-function Slide(pos)
-flow.Value = flow.Value + 6
-Action = "Sliding"
-Sliding = true
-GravPoint = Torsoz.Velocity.y
-local spd = Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).magnitude + 10
-local dir = Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).unit
- 
-local bv = Instance.new("BodyVelocity", Torsoz)
-bv.maxForce = Vector3.new(1/0,1/0,1/0)
-bv.velocity = dir*spd
-local bg = Instance.new("BodyGyro", Torsoz)
-bg.maxTorque = Vector3.new(1/0,1/0,1/0)
-bg.cframe = CFrame.new(NV, dir) * CFrame.Angles(math.pi/2.2,0.24,0)
- 
-local joint1 = Joint1
-local joint2 = Joint2
-local joint3 = Joint3
-local joint4 = Joint4
-local joint5 = Joint5
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
- 
-SetWeld(joint1,1,1, NV,NV, Vector3.new(j1.x,j1.y,j1.z), Vector3.new(j1a.x,math.pi/2,j1a.z))
-joint1.C1 = CFrame.new(0,1,0) * CFrame.Angles(0,math.pi/2,0)
-SetWeld(joint2,1,1, NV,NV, Vector3.new(j2.x,j2.y,j2.z), Vector3.new(j2a.x,math.pi/2,j2a.z))
-joint2.C1 = CFrame.new(0,1,0) * CFrame.Angles(0,math.pi/2,0)
- 
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
- 
-local count = 0
-local lastpos
- 
-while Sliding == true do
-count = count + 1
-Hu.PlatformStand = true
-local hitz1, enz1 = RAY(Torsoz.Position+Vector3.new(0,0.03,0), dir *2.5)
-local hitz2, enz2 = RAY(Torsoz.Position-Vector3.new(0,0.2,0), dir *2.5)
-local ghitz, genz = RAY(Torsoz.Position, Vector3.new(0,-2.6,0))
-bv.velocity = dir*spd + Vector3.new(0,GravPoint,0)
- 
-if count <= 5 then
-SetWeld(joint1,count,5, j1,j1a, Vector3.new(0.5,-0.8,-0.15), Vector3.new(0,(math.pi/2)+0.1,-0.4))
-SetWeld(joint2,count,5, j2,j2a, Vector3.new(-0.5,-1,0), Vector3.new(0,(math.pi/2)-0.4,0))
-SetWeld(joint3,count,5, j3,j3a, Vector3.new(1.5,0.5,0), Vector3.new(-0.7,-0.24,math.pi/5))
-SetWeld(joint4,count,5, j4,j4a, Vector3.new(-1.5,0.5,0), Vector3.new(-0.1,0,-math.pi/1.5))
-SetWeld(joint5,count,5, j5,j5a, Vector3.new(0,1,0), Vector3.new(-0.5,-0.2,0))
-end
- 
-if (hitz1 ~= nil and hitz1.CanCollide == true) or (hitz2 ~= nil and  hitz2.CanCollide == true) then
-bv:remove()
-bg:remove()
-Sliding = "HitObject"
-end
-if ghitz ~= nil then
-GravPoint = 0
-Torsoz.CFrame = CFrame.new(genz, genz+dir) * CFrame.Angles(math.pi/2.2,0.24,0) + Vector3.new(0,0.7,0)
-spd = spd - 0.95
-else
-if GravPoint > -180 then
-GravPoint = GravPoint - 5.6
-end
-spd = spd - 0.36
-end
-if spd < 7 then
-Sliding = false
-end
-wait(0.02)
-end
- 
-if Sliding == false then
-local j1,j1a = GetWeld(joint1)
-local j2,j2a = GetWeld(joint2)
-local j3,j3a = GetWeld(joint3)
-local j4,j4a = GetWeld(joint4)
-local j5,j5a = GetWeld(joint5)
-for i = 1, 4 do
-SetWeld(joint1,i,4, j1,j1a, Vector3.new(0.5,-1,0), Vector3.new(0,math.pi/2,0))
-SetWeld(joint2,i,4, j2,j2a, Vector3.new(-0.5,-1,0), Vector3.new(0,math.pi/2,0))
-SetWeld(joint3,i,4, j3,j3a, Vector3.new(1.5,0.5,0), NV)
-SetWeld(joint4,i,4, j4,j4a, Vector3.new(-1.5,0.5,0), NV)
-SetWeld(joint5,i,4, j5,j5a, Vector3.new(0,1,0), NV)
-local hitz, enz = RAY(Torsoz.Position, Vector3.new(0,-2.6,0))
-bg.cframe = CFrame.new(NV, dir) * CFrame.Angles((math.pi/2.2) - ((math.pi/2.2)/4*i),0.24 - (0.24/4*i),0)
-bv.velocity = dir*spd + Vector3.new(0,GravPoint,0)
- 
-if hitz ~= nil then
-GravPoint = 0
-Torsoz.CFrame = CFrame.new(enz, enz+dir) * CFrame.Angles((math.pi/2.2) - ((math.pi/2.2)/4*i),0.24 - (0.24/4*i),0) + Vector3.new(0,0.7+(1.8/4*i),0)
-spd = spd - 0.95
-else
-if GravPoint > -180 then
-GravPoint = GravPoint - 5.6
-end
-spd = spd - 0.36
-end
-wait(0.02)
-end
-local hitz, enz = RAY(Torsoz.Position, Vector3.new(0,-2.6,0))
-Torsoz.CFrame = CFrame.new(enz, enz+dir) + Vector3.new(0,3,0)
-end
-bv:remove()
-bg:remove()
-SlideCooldown = 10
-Stand()
-end
- 
-function KD(key)
-if pause.Value == false then
-if key == string.char(32) then
-Space = true
- 
-local ghitz, genz = RAY(Torsoz.Position, Vector3.new(0,-3.7,0))
-local hitz, enz = RAY(Torsoz.Position+Vector3.new(0,1.1,0), Torsoz.CFrame.lookVector*2.3)
-local righthitz, rightenz
-local lefthitz, leftenz
- 
-if HWallRunning == false then
-righthitz, rightenz = RAY(Torsoz.Position, ((Torsoz.CFrame * CFrame.new(1.5,0,-0.2)).p - Torsoz.CFrame.p).unit*3.9)
-lefthitz, leftenz = RAY(Torsoz.Position, ((Torsoz.CFrame * CFrame.new(-1.5,0,-0.2)).p - Torsoz.CFrame.p).unit*3.9)
- 
-elseif HWallRunning == "Jumping" then
-righthitz, rightenz = RAY(Torsoz.Position, ((CFrame.new(Torsoz.Position, Torsoz.Position + HWRDir) * CFrame.new(1.5,0,-0.2)).p - Torsoz.Position).unit*3.9)
-lefthitz, leftenz = RAY(Torsoz.Position, ((CFrame.new(Torsoz.Position, Torsoz.Position + HWRDir) * CFrame.new(-1.5,0,-0.2)).p - Torsoz.Position).unit*3.9)
- 
-end
- 
-if Action == "Standing" and Shift == true and (hitz == nil or hitz.CanCollide == false) and (righthitz == nil or righthitz.CanCollide == false) and (lefthitz == nil or lefthitz.CanCollide == false) and (ghitz == nil or ghitz.CanCollide == false) and (Torsoz.Velocity.y > 6 and Torsoz.Velocity.y < 50) and DivingCooldown <= 0 then
-if stamina >= 10 then
---if Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).magnitude > 12 then
-Dive()
---end
-end
-end
- 
-if hitz == nil and VWallRunning == "Falling" then
-VWallRunning = "BackflipFromFall"
-end
- 
-if Shift == true and Torsoz.Velocity.y > -50 and Diving == false and DivingCooldown <= 0 then
-local hitz2, enz2 = RAY(Torsoz.Position, Vector3.new(0,-3.5,0))
- 
-if hitz ~= nil then
-if Action == "Standing" and VWRCooldown == 0 then
-if hitz2 == nil or hitz2.CanCollide == false then
-VWR(hitz, enz)
-end
-end
-end
- 
-if (HWallRunning == false or (HWallRunning == "Jumping" and (HWRLastPart ~= righthitz or HWRLastPart ~= lefthitz))) and HWRCooldown == 0 and VWallRunning == false then
- 
-if (hitz == nil or HWallRunning == "Jumping") and ((righthitz ~= nil and righthitz.Parent:findFirstChild("Humanoid") == nil and righthitz.Parent.className ~= "Hat") or (lefthitz ~= nil and lefthitz.Parent:findFirstChild("Humanoid") == nil and lefthitz.Parent.className ~= "Hat")) then
-if hitz2 == nil or hitz2.CanCollide == false then
-local right = (rightenz - Torsoz.Position).magnitude
-local left = (leftenz - Torsoz.Position).magnitude
-if right < left then
-if HWallRunning == "Jumping" and HWRLastPart ~= righthitz then
-HWallRunning = false
-while Standing == false do
-wait(0.01)
-end
-print("2nd Right Activated!")
-HWallRun(righthitz, rightenz, -math.pi/2)
-else
-if hitz == nil then
-print("Right Activated")
-HWallRun(righthitz, rightenz, -math.pi/2)
-end
-end
-elseif left < right then
-if HWallRunning == "Jumping" and HWRLastPart ~= lefthitz then
-HWallRunning = false
-while Standing == false do
-wait(0.01)
-end
-print("2nd Left Activated!")
-HWallRun(lefthitz, leftenz, math.pi/2)
-else
-if hitz == nil then
-print("Left Activated")
-HWallRun(lefthitz, leftenz, math.pi/2)
-end
-end
-end
-end
-end
-end
- 
-end
- 
-if HWallRunning == true then
-HWallRunning = "Jumping"
-Action = "HWRJumping"
-end
- 
-elseif key == string.char(48) then
-Shift = true
-elseif key == string.char(50) then
-if Action == "Standing" then
-Sit()
-elseif HWallRunning == true then
-HWRGravDrop = true
-end
-elseif key == string.char(52) then
-if Shift == true and Action == "Standing" and SlideCooldown == 0 and Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).magnitude > 15 and Torsoz.Velocity.y > -40 then
-print("Sliding")
-Slide()
-end
-elseif key == "a" then
-VWRLeft = true
-elseif key == "d" then
-VWRRight = true
-end
-end
-end
- 
-function KU(key)
-if key == string.char(32) then
-Space = false
-elseif key == string.char(48) then
-Shift = false
-elseif key == string.char(50) then
-if Action == "Sitting" then
-Stand()
-end
-elseif key == string.char(52) then
-Sliding = false
-elseif key == "a" then
-VWRLeft = false
-elseif key == "d" then
-VWRRight = false
-end
-end
- 
-mouse.KeyDown:connect(function(key) KD(key) end)
-mouse.KeyUp:connect(function(key) KU(key) end)
- 
-Joint1 = Instance.new("Snap", Torsoz)
-GetWeld(Joint1)
-Joint2 = Instance.new("Snap", Torsoz)
-GetWeld(Joint2)
-Joint3 = Instance.new("Snap", Torsoz)
-GetWeld(Joint3)
-Joint4 = Instance.new("Snap", Torsoz)
-GetWeld(Joint4)
-Joint5 = Instance.new("Snap", Torsoz)
-GetWeld(Joint5)
-Stand()
- 
-local animatebg = Instance.new("BodyGyro")
-animatebg.D = 100
-local GravAction = "Idle"
-local PrevGravAction = GravAction
- 
-local prevrapos = (RA.CFrame * CFrame.new(0,-1,0)).p
-local prevlapos = (LA.CFrame * CFrame.new(0,-1,0)).p
-local hue = 0
-local recyclecount = 0
-local tickoffset = tick()
-local fadetab = {}
-local fadetab2 = {}
-local animatebgcount = 0
- 
-for i = 1, 13 do
-local p = P:Clone()
-p.Name = "Part"..i
-local mesh = Instance.new("SpecialMesh", p)
-mesh.MeshId = "http://www.roblox.com/Asset/?id=9856898"
-mesh.TextureId = "http://www.roblox.com/Asset/?id=48358980"
-table.insert(fadetab, {p, mesh})
-end
-for i = 1, 13 do
-local p = P:Clone()
-p.Name = "Part"..i
-local mesh = Instance.new("SpecialMesh", p)
-mesh.MeshId = "http://www.roblox.com/Asset/?id=9856898"
-mesh.TextureId = "http://www.roblox.com/Asset/?id=48358980"
-table.insert(fadetab2, {p, mesh})
-end
- 
-game:service("RunService").Stepped:connect(function()
-GravAction = "Idle"
-hue = hue + 3
-hue = hue % 360
- 
-------------- anim angle changing --------
-if animangle > math.pi then
-animplus = false
-elseif animangle < -math.pi then
-animplus = true  
-end
-if animplus == true then
-animangle = animangle + animspeed
-elseif animplus == false then
-animangle = animangle - animspeed
-end
- 
-local hitz, enz = RAY(Torsoz.Position, Vector3.new(0,-3.9,0))
-if Shift == true then
-Hu.WalkSpeed = sprint
-else
-Hu.WalkSpeed = 16
-end
-if (FOV >= 70 and FOV < 74) and Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).magnitude > 25 then
-FOV = FOV + 1
-elseif (FOV <= 74 and FOV > 70) and Vector3.new(Torsoz.Velocity.x,0,Torsoz.Velocity.z).magnitude < 20 then
-FOV = FOV - 1
-end
-if pause.Value == true then
-Hu.WalkSpeed = 0
-end
-if Sitting == true then
-local hitz2, enz2 = RAY(Torsoz.Position, Vector3.new(0,-2.2,0))
-Hu.PlatformStand = true
-if hitz2 == nil then
-Stand()
-end
-end
-if Diving == true then
-Hu.PlatformStand = true
-DivingBV.velocity = Vector3.new(DivingDir.x*(sprint+2),GravPoint,DivingDir.z*(sprint+2))
-DivingBG.cframe = CFrame.new(Torsoz.Position, Torsoz.Position+DivingBV.velocity) * CFrame.Angles(-math.pi/2,0,0)
- 
-if GravPoint > -180 then
-GravPoint = GravPoint - 2
-end
-end
-if DivingCooldown > 0 then
-DivingCooldown = DivingCooldown - 1
-end
-if HWallRunning == true then
-if HWRGravDrop == false then
-GravPoint = GravPoint - 0.4
-else
-GravPoint = GravPoint - 2
-end
-elseif HWallRunning == "Jumping" then
-GravPoint = GravPoint - 1.7
-end
------------------------------ stamina ----------------------------------------
-if Vector3.new(Torsoz.Velocity.x, 0, Torsoz.Velocity.z).magnitude > 18 and Action == "Standing" and Shift == true then
-if stamina > 0 then
-stamina = stamina - 0.5
-if stamina < 0 then
-Shift = false
-stamina = 0
-end
-else
-Shift = false
-stamina = 0
-end
-if Action == "Standing" then
-animspeed = 0.85
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.5,-1,0), Vector3.new(-animangle/4.85,0,0))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.5,-1,0), Vector3.new(animangle/4.85,0,0))
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.5,0.5,0), Vector3.new(animangle/3.5,0,0))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.5,0.5,0), Vector3.new(-animangle/3.5,0,0))
-end
-elseif Vector3.new(Torsoz.Velocity.x, 0, Torsoz.Velocity.z).magnitude > 12 and Action ~= "Sliding" then
-if stamina < maxstamina then
-stamina = stamina + 0.5
-if stamina > maxstamina then
-stamina = maxstamina
-end
-else
-stamina = maxstamina
-end
-if Action == "Standing" then
-animspeed = 0.65
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.5,-1,0), Vector3.new(-animangle/7,0,0))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.5,-1,0), Vector3.new(animangle/7,0,0))
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.5,0.5,0), Vector3.new(animangle/5,0,0))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.5,0.5,0), Vector3.new(-animangle/5,0,0))
-end
-elseif Vector3.new(Torsoz.Velocity.x, 0, Torsoz.Velocity.z).magnitude < 2 then
-animspeed = 0.1
-if Action == "Standing" then
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.5,-1,0), Vector3.new(-animangle/38,0,0))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.5,-1,0), Vector3.new(animangle/38,0,0))
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.5,0.5,0), Vector3.new(animangle/30,0,0))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.5,0.5,0), Vector3.new(-animangle/30,0,0))
-end
-if stamina < maxstamina then
-if Sitting == false then
-stamina = stamina + 0.65
-else
-stamina = stamina + 1.02
-end
-if stamina > maxstamina then
-stamina = maxstamina
-end
-else
-stamina = maxstamina
-end
-end
- 
-if hitz == nil then
-if Torsoz.Velocity.y > 1 or (Torsoz.Velocity.y < -1 and Torsoz.Velocity.y > -90) then
-if Action == "Standing" then
-GravAction = "Rising"
-animspeed = 0.1
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.5,-1,0), Vector3.new(-animangle/38,0,0))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.5,-1,0), Vector3.new(animangle/38,0,0))
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.5,0.5,0), Vector3.new((math.pi-0.2)+(animangle/30),0,0))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.5,0.5,0), Vector3.new((math.pi-0.2)+(-animangle/30),0,0))
-if animatebg.Parent ~= nil then
-animatebg.Parent = Torsoz
-animatebg.maxTorque = Vector3.new(1/0,10000,1/0)
-local lokvec = Torsoz.CFrame.lookVector*100
-animatebg.cframe = CFrame.new(NV, Vector3.new(lokvec.x,0,lokvec.z))
-animatebg.Parent = nil
-end
-end
-end
-end
- 
-if hitz == nil then
-local hitz2, enz2 = RAY(Torsoz.Position, Vector3.new(0,-6,0))
-if hitz2 == nil then
-if Torsoz.Velocity.y < -90 then
-if Action == "Standing" then
-GravAction = "Falling"
-animspeed = 1.1
-animatebg.Parent = Torsoz
-animatebg.maxTorque = Vector3.new(1/0,10000,1/0)
-local lokvec = Torsoz.CFrame.lookVector*100
-animatebg.cframe = CFrame.new(NV, Vector3.new(lokvec.x,0,lokvec.z)) * CFrame.Angles(-math.pi/11,animangle/70,0)
-SetWeld(Joint1,1,1, NV,NV, Vector3.new(0.45,-0.8,0), Vector3.new((animangle/27)-0.3,0,0.18))
-SetWeld(Joint2,1,1, NV,NV, Vector3.new(-0.45,-0.8,0), Vector3.new((-animangle/27)-0.3,0,-0.18))
-SetWeld(Joint3,1,1, NV,NV, Vector3.new(1.4,0.5,0), Vector3.new((math.pi+0.2)+(animangle/26),0,0.18))
-SetWeld(Joint4,1,1, NV,NV, Vector3.new(-1.4,0.5,0), Vector3.new((math.pi+0.2)+(-animangle/26),0,-0.18))
-end
-end
-elseif hitz2.CanCollide == true then
-if animatebg.Parent ~= nil then
-animatebg.Parent = Torsoz
-animatebg.maxTorque = Vector3.new(1/0,10000,1/0)
-local lokvec = Torsoz.CFrame.lookVector*100
-animatebg.cframe = CFrame.new(NV, Vector3.new(lokvec.x,0,lokvec.z))
-animatebg.Parent = nil
-end
-end
-end
- 
-if GravAction == "Idle" and animatebg.Parent ~= nil then
-animatebg.Parent = nil
-end
- 
-if math.abs(tickoffset - tick()) > 0.05 then
-tickoffset = tick()
-local flowcolor = HSV(hue, 0.7,1)
-recyclecount = (recyclecount % #fadetab) + 1
-if flow.Value > 25 then
-local lapos = (LA.CFrame * CFrame.new(0,-1,0)).p
-local rapos = (RA.CFrame * CFrame.new(0,-1,0)).p
-local p = fadetab[recyclecount]
-p[1].Parent = m
-p[1].CFrame = CFrame.new((lapos+prevlapos)/2, lapos)
-p[2].Scale = Vector3.new(0.5,0.5,(lapos-prevlapos).magnitude*2)
-p[2].VertexColor = Vector3.new(flowcolor.r,flowcolor.g,flowcolor.b)
-p[1].Transparency = math.abs((flow.Value/120) - 0.8)
-p[1].Transparency = p[1].Transparency + (1/#fadetab)
-local p = fadetab2[recyclecount]
-p[1].Parent = m
-p[1].CFrame = CFrame.new((rapos+prevrapos)/2, rapos)
-p[2].Scale = Vector3.new(0.5,0.5,(rapos-prevrapos).magnitude*2)
-p[2].VertexColor = Vector3.new(flowcolor.r,flowcolor.g,flowcolor.b)
-p[1].Transparency = math.abs((flow.Value/120) - 0.8)
-p[1].Transparency = p[1].Transparency + (1/#fadetab)
-end
- 
-for i, v in pairs(fadetab) do
-if v[1].Transparency < 0.9 then
-v[1].Transparency = v[1].Transparency + (1/#fadetab)
-fadetab2[i][1].Transparency = fadetab2[i][1].Transparency + (1/#fadetab)
-elseif v[1].Transparency ~= 1 then
-v[1].Transparency = 1
-v[1].Position = Vector3.new(50000,0,0)
-fadetab2[i][1].Transparency = 1
-fadetab2[i][1].Position = Vector3.new(50000,0,0)
-end
-end
- 
-prevrapos = (RA.CFrame * CFrame.new(0,-1,0)).p
-prevlapos = (LA.CFrame * CFrame.new(0,-1,0)).p
-end
- 
-if flow.Value > 140 then
-if char.Parent ~= nil then
-char:remove()
-end
-end
- 
-if flowcooldown > 0 then
-flowcooldown = flowcooldown - 1
-end
-if HWRCooldown > 0 then
-HWRCooldown = HWRCooldown - 1
-end
-if VWRCooldown > 0 then
-if hitz ~= nil and VWRCooldown > 0 then
-VWRCooldown = VWRCooldown - 1
-end
-end
-if SlideCooldown > 0 then
-SlideCooldown = SlideCooldown - 1
-end
- 
-if Action == "HWallRunning" or Action == "VWallRunning" then
-flow.Value = flow.Value + 0.24
-if flow.Value > 100 then
-flow.Value = 100
-end
-flowcooldown = 40
-elseif Action == "Diving" then
-flowcooldown = 30
-elseif Action == "Sliding" then
-flowcooldown = 15
-elseif Action == "Standing" or Action == "Sitting" then
-if flow.Value > 0 and flowcooldown <= 0 then
-flow.Value = flow.Value - 0.37
-if flow.Value < 0 then
-flow.Value = 0
-end
-end
-end
- 
-cam.FieldOfView = FOV
-prevanimbgcount = animatebgcount
-sprint = defsprint + ((flow.Value/100)*2.4)
-PrevGravAction = GravAction
-Calculate()
+
+UIS.InputEnded:Connect(function(input,g)
+	if input.KeyCode == Enum.KeyCode.C then
+		if g then return end
+		cdown = false
+	end
 end)
+
+wallrunable = false
+
+wallrunning = false
+hitfloor = false
+leftwallrunning = false
+rightwallrunning = false
+onfloor = false
+frontwallrunning = false
+fronthit = false
+rs = game:GetService("RunService")
+cam = workspace.CurrentCamera
+
+
+UIS.InputBegan:Connect(function(input,gamestuff)
+	if input.KeyCode == Enum.KeyCode.X then
+		if camerakill == true then return end
+		if gamestuff then return end
+		if camerakill == false then
+			for i = 5,1,-1 do
+				rs.RenderStepped:Wait()
+				  if camerakill == true then return end
+				cam.CFrame = cam.CFrame*CFrame.Angles(0,math.rad(35),0)
+			end
+		end
+	end
+end)
+local rollering = false
+coroutine.resume(coroutine.create(function()
+
+	while true do
+	      if camerakill == true then return end
+		rs.RenderStepped:Wait()
+
+if combattime > 0.05 then
+if combatmusic.Volume ~= 0.5 then 
+    combatmusic.Volume = 0.5
+    ambience.Volume = 0
+    explorationmusic.Volume = 0
+    combatmusic:Play()
+end
+combattime = combattime-0.01
+else
+    combattime = 0
+    if combatmusic.Volume == 0.5 then 
+    combatmusic.Volume = 0
+    ambience.Volume = 0.5
+  
+    explorationmusic.Volume = 0
+end
+    end
+		if rolldel == true or downed == true  then
+if camerakill == true then return end
+			cam.CFrame = char:WaitForChild("Head").CFrame
+
+		end
+	if camerakill == false then
+	    winder.Volume = root.Velocity.Magnitude*0.015
+	    if winder.Volume > 5 then
+	        winder.Volume = 5
+	        end
+	    winder.PlaybackSpeed = root.Velocity.Magnitude*0.015
+	      if winder.PlaybackSpeed > 4 then
+	        winder.PlaybackSpeed = 4
+	      end
+	    windercloth.Volume = root.Velocity.Magnitude*0.015
+	    if windercloth.Volume > 5 then
+	        windercloth.Volume = 5
+	        end
+	    windercloth.PlaybackSpeed = root.Velocity.Magnitude*0.015
+	      if windercloth.PlaybackSpeed > 2 then
+	        windercloth.PlaybackSpeed = 2
+	        end
+	    end
+
+
+		if rolldel == false and wallrunning == false and sliding == false and  downed == false and holding == false then
+			hum.AutoRotate = true
+			if slidingsound.IsPlaying == true then 
+			    slidingsound:Stop()
+			end
+		    if wallrunningsound.IsPlaying == true then
+		        wallrunningsound:Stop()
+		        end
+		else
+			hum.AutoRotate = false
+			if wallrunning == true then
+			     if wallrunningsound.IsPlaying == false then
+		        wallrunningsound:Play()
+		        end
+			    else
+			     if wallrunningsound.IsPlaying == true then
+		        wallrunningsound:Stop()
+		        end
+			    end
+			
+			
+			if sliding == true then
+			    		if slidingsound.IsPlaying == false then 
+			    slidingsound:Play()
+			    		end
+		    else
+		        			if slidingsound.IsPlaying == true then 
+			    slidingsound:Stop()
+			    end
+			    end
+		end
+
+	end
+
+end))
+function wallrunabletrue()
+	coroutine.resume(coroutine.create(function()
+		if hitfloor == true then return end
+		wallrunable = true
+		wait(0.05)
+		wallrunable = false
+	end))
+end
+
+
+wallrundel = false
+function verticalwallrun(grav2)
+	coroutine.resume(coroutine.create(function()
+		if wallrundel == true then return end
+		if wallrunning == true then return end
+		if downed == true then return end
+		if cdown == true then return end
+		if wallrunable == false then return end
+
+		if fronthit then
+
+			print("Made it 1")
+			local rr = Ray.new(root.Position,root.CFrame.LookVector*5)
+			local rhit,ray,rpoint = workspace:FindPartOnRayWithIgnoreList(rr,ignorelist)
+			if rhit then
+				if rhit then
+					wallrunning = false
+					wait()
+					tilterepic(0)
+					tricksinarow = tricksinarow+1
+					wallrunning = true
+					gyro.CFrame = CFrame.new(root.Position,root.Position+rpoint)*CFrame.Angles(math.rad(-22),math.rad(180),0)
+					gyro.MaxTorque = Vector3.new(99999,99999,99999)
+
+
+					local grav = grav2-11
+					runvel.Velocity = Vector3.new(0,grav,0)
+					print("Made it 2")
+					runvel.MaxForce = Vector3.new(99999,99999,99999)
+					wallrunable = false
+					hum.PlatformStand = true
+						randomclothrollsound()
+					verticalwallrunanimplay:Play()
+					while wallrunning == true do
+						rs.RenderStepped:Wait()
+						  if camerakill == true then return end
+
+						grav = grav-0.8
+						local r2 = Ray.new(root.Position,root.CFrame.LookVector*5)
+						local hit,ray,point = workspace:FindPartOnRayWithIgnoreList(r2,ignorelist)
+						if hit then
+							print("Made it 3")
+							if hitfloor then wallrunning = false end
+							if cdown == true then wallrunning = false end
+							if hit then
+								gyro.CFrame = CFrame.new((ray+root.CFrame.LookVector*-2),(ray+root.CFrame.LookVector*-2)+point)*CFrame.Angles(math.rad(-22),math.rad(180),0)
+								runvel.Velocity = Vector3.new(0,grav,0)
+								gyro.P = befpower
+								if wallrunable == true then
+
+									wallrunning = false
+									gyro.MaxTorque = Vector3.new(0,0,0)
+									hum.PlatformStand = false
+									print("Jump")
+									randomclothrollsound()
+										jumplandsoundthingy:Play()
+			local rannum = math.random(1,3)
+if rannum == 1 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079433272"
+elseif rannum == 2 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079432684"
+else
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+end
+							bodymovesound:Play()
+									hum.PlatformStand = false
+									runvel.velocity = root.CFrame.LookVector*-hum.WalkSpeed+Vector3.new(0,30,0)
+									wait(0.22)
+								end
+
+							else
+
+								wallrunning = false
+
+							end
+						else
+
+							wallrunning = false
+
+
+						end
+					end
+					hum.PlatformStand = false
+					verticalwallrunanimplay:Stop()
+					gyro.MaxTorque = Vector3.new(0,0,0)
+					print("Wall run ended")
+
+					runvel.MaxForce = Vector3.new(0,0,0)
+					hum:ChangeState(Enum.HumanoidStateType.Jumping)
+					return
+				end
+
+
+
+
+			end
+
+		end
+	end))
+end
+
+
+
+function wallruncheck()
+    	if downed == true then 
+    	    if rolldel == false and downeddel == false then
+    	        downedanim1play:Stop()
+    	          downed = false
+    	          hum.JumpPower = 50
+    	        roll()
+    	      return
+    	        end
+    	    
+    	     end
+	if sliding == true then return end
+	if cdown == true then
+		if hitfloor == true then
+			roll()
+		end
+	end
+	if wallrundel == true then return end
+	if wallrunning == true then return end
+	if wallrunable == false then return end
+	if cdown == true then return end
+	if dodgedel == true then return end
+	wallrunable = false
+	local rr = Ray.new(root.Position,root.CFrame.RightVector*3.5)
+	local rhit,ray,rpoint = workspace:FindPartOnRayWithIgnoreList(rr,ignorelist)
+	if rhit then
+		if rhit then
+
+			wallrunning = true
+			gyro.CFrame = CFrame.new(root.Position,root.Position+rpoint)*CFrame.Angles(0,math.rad(-90),math.rad(20))
+			gyro.MaxTorque = Vector3.new(99999,99999,99999)
+			hum.PlatformStand = true
+
+			local grav = 20
+			runvel.Velocity = gyro.CFrame.LookVector*30+Vector3.new(0,grav,0)
+			runvel.Velocity = runvel.Velocity + gyro.CFrame.RightVector*5
+			runvel.MaxForce = Vector3.new(99999,99999,99999)
+			rightwallrunanimplay:Play()
+				randomclothrollsound()
+			tricksinarow = tricksinarow+1
+			tilterepic(35)
+			while wallrunning == true do
+			    if camerakill == true then return end
+				rs.RenderStepped:Wait()
+ 
+				grav = grav-0.95
+				local r2 = Ray.new(root.Position,root.CFrame.RightVector*5)
+				local hit,ray,point = workspace:FindPartOnRayWithIgnoreList(r2,ignorelist)
+				if hit then
+
+					if hitfloor then wallrunning = false end
+					if cdown == true then wallrunning = false end
+					if fronthit == true then print("Face died") tilterepic(0) wallrunning = false  rightwallrunanimplay:Stop()	gyro.MaxTorque = Vector3.new(0,0,0)
+						print("Wall run end")
+
+						runvel.MaxForce = Vector3.new(0,0,0)wallrunable = true verticalwallrun(grav+hum.WalkSpeed)  return end
+					if hit then
+						gyro.CFrame = CFrame.new((ray+root.CFrame.RightVector*-2),(ray+root.CFrame.RightVector*-2)+point)*CFrame.Angles(0,math.rad(-90),math.rad(20))
+						runvel.Velocity = gyro.CFrame.LookVector*hum.WalkSpeed+Vector3.new(0,grav,0)
+						gyro.P = befpower
+						if wallrunable == true then
+							tilterepic(0)
+							wallrunning = false
+							rightwallrunanimplay:Stop()
+							gyro.MaxTorque = Vector3.new(0,0,0)
+							hum.PlatformStand = false
+										jumplandsoundthingy:Play()
+											randomclothrollsound()
+			local rannum = math.random(1,3)
+if rannum == 1 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079433272"
+elseif rannum == 2 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079432684"
+else
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+end
+							bodymovesound:Play()
+							runvel.velocity = cam.CFrame.LookVector*hum.WalkSpeed+Vector3.new(0,30,0)
+							wait(0.22)
+						end
+
+					else
+
+						wallrunning = false
+
+					end
+				else
+
+					wallrunning = false
+
+
+				end
+			end
+			tilterepic(0)
+			hum.PlatformStand = false
+			rightwallrunanimplay:Stop()
+			gyro.MaxTorque = Vector3.new(0,0,0)
+			print("Wall run end")
+			runvel.MaxForce = Vector3.new(0,0,0)
+			return
+		end
+
+
+
+
+	end
+
+	local rl = Ray.new(root.Position,root.CFrame.RightVector*-3.5)
+	local lhit,ray,rpoint = workspace:FindPartOnRayWithIgnoreList(rl,ignorelist)
+	if lhit then
+		if lhit then
+
+			wallrunning = true
+
+			gyro.CFrame = CFrame.new(root.Position,root.Position+rpoint)*CFrame.Angles(0,math.rad(90),math.rad(-20))
+			gyro.MaxTorque = Vector3.new(99999,99999,99999)
+			gyro.P = 250
+			local grav = 20
+			runvel.Velocity = (gyro.CFrame.LookVector*30+Vector3.new(0,grav,0))
+			runvel.Velocity = runvel.Velocity + gyro.CFrame.RightVector*-5
+			hum.PlatformStand = true
+
+
+			leftwallrunanimplay:Play()
+				randomclothrollsound()
+			tilterepic(-35)
+			tricksinarow = tricksinarow+1
+			runvel.MaxForce = Vector3.new(99999,99999,99999)
+			
+			while wallrunning == true do
+  if camerakill == true then return end
+				rs.RenderStepped:Wait()
+
+				if hitfloor then wallrunning = false end
+				if fronthit == true then print("Face died") 	tilterepic(0) wallrunning = false leftwallrunanimplay:Stop() 	gyro.MaxTorque = Vector3.new(0,0,0)
+					print("Wall run end")
+					runvel.MaxForce = Vector3.new(0,0,0) wallrunable= true verticalwallrun(grav+hum.WalkSpeed) return end
+				rs.RenderStepped:Wait()
+				  if camerakill == true then return end
+				grav = grav-0.95
+				local r2 = Ray.new(root.Position,root.CFrame.RightVector*-5)
+				local hit,ray,point = workspace:FindPartOnRayWithIgnoreList(r2,ignorelist)
+				if hit then
+
+					if cdown == true then wallrunning = false end
+					if hit then
+						gyro.CFrame = CFrame.new((ray+root.CFrame.RightVector*2),(ray+root.CFrame.RightVector*2)+point)*CFrame.Angles(0,math.rad(90),math.rad(-20))
+						runvel.Velocity = gyro.CFrame.LookVector*hum.WalkSpeed+Vector3.new(0,grav,0)
+						gyro.P = befpower
+
+						if wallrunable == true then
+
+							wallrunning = false
+							tilterepic(0)
+							leftwallrunanimplay:Stop()
+							gyro.MaxTorque = Vector3.new(0,0,0)
+							hum.PlatformStand = false
+										jumplandsoundthingy:Play()
+											randomclothrollsound()
+			local rannum = math.random(1,3)
+if rannum == 1 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079433272"
+elseif rannum == 2 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079432684"
+else
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+end
+							bodymovesound:Play()
+							runvel.velocity = cam.CFrame.LookVector*hum.WalkSpeed+Vector3.new(0,30,0)
+							wait(0.22)
+						end
+
+					else
+
+						wallrunning = false
+
+					end
+				else
+
+					wallrunning = false
+
+
+				end
+			end
+			hum.PlatformStand = false
+			leftwallrunanimplay:Stop()
+			tilterepic(0)
+			gyro.MaxTorque = Vector3.new(0,0,0)
+			print("Wall run end")
+			runvel.MaxForce = Vector3.new(0,0,0)
+			return
+		end
+
+
+
+
+	end
+	wallrunable = true
+	verticalwallrun(hum.WalkSpeed+20)
+
+end
+
+
+
+
+
+
+local spacedown = false
+local backjumpdel = false
+local backhit = false
+UIS.InputBegan:Connect(function(inpt,gamestuff)
+	if inpt.KeyCode == Enum.KeyCode.Space then
+		if gamestuff then return end
+				if wallrunning == false then
+		    
+		    if sliding == false then
+		        if backhit == true then
+		            if hitfloor == false then
+		            	jumplandsoundthingy:Play()
+		            randomclothrollsound(false)
+		            root.Velocity = root.CFrame.LookVector*120+Vector3.new(0,40,0)
+		            end
+		            end
+		        end
+		    
+		    end
+		wallrunabletrue()
+		wallruncheck()
+		if sliding == true then
+
+			spacedown = true
+			wait(0.1)
+			spacedown = false
+		end
+
+		wait(0.1)
+		if wallrunning == false then
+			if rolldel == false then
+
+				if backjumpdel == false then
+				    
+
+				end
+
+			end
+
+		end
+	end
+
+
+
+end)
+
+
+
+
+function slide()
+	coroutine.resume(coroutine.create(function()
+	    	if downed == true then return end
+		if sliding == true then return end
+		sliding = true
+		randomclothrollsound()
+		tilterepic(-15,true)
+		hum.PlatformStand = true
+		gyro.MaxTorque = Vector3.new(99999,99999,99999)
+		gyro.P = befpower*3
+
+		runvel.MaxForce = Vector3.new(99999,99999,99999)
+		local ogcf = root.CFrame
+		local befrooty = root.Position.Y
+		local ogcf = root.CFrame
+		gyro.CFrame = ogcf*CFrame.Angles(math.rad(80),0,0)
+		print("BEGINSLIDE")
+		tricksinarow = tricksinarow+1
+		while sliding == true do 
+			rs.RenderStepped:Wait()
+			  if camerakill == true then return end
+			runvel.Velocity = (ogcf.LookVector*flow*1.45)+Vector3.new(0,-70,0)
+
+			slidingplay:Play()
+			slidingplay:AdjustSpeed(0)
+			if root.Position.Y+0.05 < befrooty then
+				flow = flow+flowmax/70
+			end
+
+			befrooty = root.Position.Y
+
+
+
+			if root.Velocity.Magnitude < 20 then
+				sliding = false
+				slidingplay:Stop()
+				tilterepic(0,true)
+				cdown = false
+				break
+			end
+
+			if cdown == false then
+				sliding = false
+				slidingplay:Stop()
+				tilterepic(0,true)
+				break
+			else
+
+			end
+
+			flow = flow-flowmax/100
+
+
+
+			if spacedown == true then
+				sliding = false
+				cdown = false
+				slidingplay:Stop()
+				tilterepic(0,true)
+				break
+		
+			end
+
+
+			if flow < flowmin+5 then
+				sliding = false
+				flow = flowmin
+				slidingplay:Stop()
+				tilterepic(0,true)
+				break
+			end
+
+		end
+
+
+		gyro.MaxTorque = Vector3.new(0,0,0)
+		gyro.P = befpower
+
+		runvel.MaxForce = Vector3.new(0,0,0)
+		hum.PlatformStand = false
+		if spacedown == true  and flow < flowmax then
+			hum.PlatformStand = true
+			sliding = false
+			tilterepic(0,true)
+			slidingplay:Stop()
+			local x, y, z = cam.CFrame:ToEulerAnglesYXZ()
+			rollering = true
+
+			root.CFrame = CFrame.new(root.Position)*CFrame.Angles(0, y, 0)
+			bodymovesound:Play()
+			
+			roll()
+			return
+				
+				elseif spacedown == true and flowmax+3 < flow then
+			hum.PlatformStand = false
+			sliding = false
+			tilterepic(0,true)
+			slidingplay:Stop()
+			runvel.MaxForce = Vector3.new(99999,99999,99999)
+			bodymovesound:Play()
+			jumplandsoundthingy:Play()
+				randomclothrollsound()
+			local rannum = math.random(1,3)
+if rannum == 1 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079433272"
+elseif rannum == 2 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079432684"
+else
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+end
+			runvel.velocity = cam.CFrame.LookVector*flow*2+Vector3.new(0,flow,0)
+			coroutine.resume(coroutine.create(function()
+
+
+				local tiltnumb = 0
+				local rannum = math.random(1,4)
+
+				if rannum == 1 then
+					tiltnumb = 40
+				elseif rannum == 2 then
+					tiltnumb = 20
+				elseif rannum == 3 then
+					tiltnumb = -40
+				else
+					tiltnumb = -20
+				end
+
+				local cameratilterman2 =tiltnumb*0.2
+
+
+
+
+				local cameratiltermax = cameratilterman2
+
+				local sinnerman = 1
+				local sinnerman2 = 0
+				for i = 10,1,-1 do
+					game:GetService("RunService").RenderStepped:Wait()
+					  if camerakill == true then return end
+					sinnerman = sinnerman-0.1
+					sinnerman2 = math.sin(sinnerman*1.25)
+					print(sinnerman .. " I AM SIN")
+					cameratilterman2 = cameratiltermax*sinnerman2
+
+					cam.CFrame = cam.CFrame*CFrame.Angles(0,0,math.rad(cameratilterman2))
+				end
+
+
+			end))
+			wait(0.25)
+			runvel.MaxForce = Vector3.new(0,0,0)
+			return
+				
+				else
+			hum.PlatformStand = false
+			sliding = false
+		
+			return
+		end
+
+	end))
+	
+end
+
+local sliding = false
+local rppos = Vector3.new(0,0,0)
+local landed = false
+local pressspacebeforeland = false
+local landdel = false
+local beforelandy = 0
+function landdeler()
+	coroutine.resume(coroutine.create(function()
+		landdel = true
+		wait(0.2)
+		landdel = false
+		pressspacebeforeland = false
+		beforelandy = root.Position.Y
+	end))
+end
+
+UIS.InputBegan:Connect(function(input,gamestuff)
+	if springjumpdel == true then return end
+	if input.KeyCode == Enum.KeyCode.Space then
+		if gamestuff == true then return end
+		if hitfloor == true then
+			if pressspacebeforeland == false then
+				pressspacebeforeland = true
+				else
+				if root.Position.Y > beforelandy+2 then
+					runvel.MaxForce = Vector3.new(99999,99999,99999)
+					runvel.Velocity = cam.CFrame.LookVector*flow*2+Vector3.new(0,flow/2,0)
+					springjumpdel = true
+														randomclothrollsound()
+										jumplandsoundthingy:Play()
+			local rannum = math.random(1,3)
+if rannum == 1 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079433272"
+elseif rannum == 2 then
+jumplandsoundthingy.SoundId = "rbxassetid://6079432684"
+else
+jumplandsoundthingy.SoundId = "rbxassetid://6079431954"
+end
+							bodymovesound:Play()
+					pressspacebeforeland = false
+					springjumpplay:Play()
+					tricksinarow = tricksinarow+1
+					coroutine.resume(coroutine.create(function()
+						
+					
+					local tiltnumb = 0
+					local rannum = math.random(1,4)
+					
+					if rannum == 1 then
+						tiltnumb = 40
+						elseif rannum == 2 then
+						tiltnumb = 20
+					elseif rannum == 3 then
+						tiltnumb = -40
+						else
+						tiltnumb = -20
+					end
+	
+					local cameratilterman2 =tiltnumb*0.2
+					
+
+
+
+					local cameratiltermax = cameratilterman2
+					
+					local sinnerman = 1
+					local sinnerman2 = 0
+					for i = 10,1,-1 do
+						game:GetService("RunService").RenderStepped:Wait()
+						  if camerakill == true then return end
+						sinnerman = sinnerman-0.1
+						sinnerman2 = math.sin(sinnerman*1.25)
+						print(sinnerman .. " I AM SIN")
+						cameratilterman2 = cameratiltermax*sinnerman2
+						
+						cam.CFrame = cam.CFrame*CFrame.Angles(0,0,math.rad(cameratilterman2))
+					end
+
+
+					end))
+
+			      
+					
+					wait(0.2)
+					springjumpplay:Stop()
+					runvel.MaxForce = Vector3.new(0,0,0)
+					wait(0.2)
+					springjumpdel = false
+				end
+			end
+		
+			
+		end
+	end
+end)
+
+
+local plr = game.Players.LocalPlayer
+local Character = plr.Character or plr.CharacterAdded:Wait()
+local Root = Character:WaitForChild("HumanoidRootPart")
+local Head = Character:WaitForChild("Head")
+local Hum = Character:WaitForChild("Humanoid")
+local holdingon = Instance.new("Animation",hum)
+holdingon.AnimationId = "rbxassetid://148831003"
+local climbingstuffs = Instance.new("Animation",hum)
+climbingstuffs.AnimationId = "rbxassetid://125750702"
+local CA = Hum:LoadAnimation(climbingstuffs)
+local HA = Hum:LoadAnimation(holdingon)
+local TouchGui = plr:WaitForChild("PlayerGui"):FindFirstChild("TouchGui")
+local UIS = game:GetService("UserInputService")
+
+ledgeavailable = true
+holding = false
+
+
+
+
+	function climb()
+		local Vele = Instance.new("BodyVelocity",Head)
+		Root.Anchored = false
+		Vele.MaxForce = Vector3.new(1,1,1) * math.huge
+		Vele.Velocity = Root.CFrame.LookVector * 10 + Vector3.new(0,30,0)
+		HA:Stop() CA:Play()
+		game.Debris:AddItem(Vele,.15)
+		holding = false
+		wait(.0)
+		ledgeavailable = true
+	end
+	
+	UIS.InputBegan:Connect(function(Key,Chat)
+		if not holding then return end 
+		if Key.KeyCode == Enum.KeyCode.Space and not Chat then
+			climb()
+		end
+	end)
+	
+	if TouchGui then
+		TouchGui:WaitForChild("TouchControlFrame"):WaitForChild("JumpButton").MouseButton1Click:Connect(function()
+			if not holding then return end climb()
+		end)
+	end
+
+
+
+
+while true do
+	repeat rs.RenderStepped:Wait() until sliding == false
+	rs.RenderStepped:Wait()
+	local r = Ray.new(root.Position,root.CFrame.LookVector*-6)
+	local hit,ray = workspace:FindPartOnRayWithIgnoreList(r,ignorelist)
+		if hit then
+		backhit = true
+	
+	else
+		backhit = false
+	end
+	
+	  if camerakill == true then return end
+	if hum.FloorMaterial == Enum.Material.Air then
+		if landed == true then
+			landed = false
+		end
+		else
+		if landed == false then
+			landed = true
+			
+			landdeler()
+		end
+		
+	end
+	local killx,killy,killz = root.CFrame:ToEulerAnglesYXZ()
+	local nobadcf = CFrame.new(root.Position)*CFrame.Angles(0,killy,0)
+	local rclimber = Ray.new(Head.CFrame.p, nobadcf.LookVector * 6)
+	
+	local killclimberray =  Ray.new(Head.CFrame.p+Vector3.new(0,0.5,0), nobadcf.LookVector * 9)
+	
+	local killmansraypart,killmansposition workspace:FindPartOnRayWithIgnoreList(killclimberray,ignorelist)
+	
+	local part,position = workspace:FindPartOnRayWithIgnoreList(rclimber,ignorelist)
+	if not killmansraypart then
+	    
+	    
+	if part and ledgeavailable and not holding and not killmansraypart  then
+		if part.Size.Y >= 4 and part.CanCollide == true and killmansraypart == nil and  part.Transparency ~= 1  then
+			if Head.Position.Y >= (part.Position.Y + (part.Size.Y / 2)) - 1 and Head.Position.Y <= part.Position.Y + (part.Size.Y / 2) and Hum.FloorMaterial == Enum.Material.Air and sliding == false and downed == false and wallrunning == true then
+			if HA.IsPlaying == false then
+			    wallrunning = false
+			    root.CFrame = nobadcf
+			    randomclothrollsound(false)
+			    HA:Play() 
+			    wallrunning = false
+			    HA:AdjustSpeed(0)
+			    HA.TimePosition = 1.3
+			end
+		    
+				Root.Anchored = true holding = true ledgeavailable = false
+			end
+		end
+	end
+	end
+	local r = Ray.new(root.Position,Vector3.new(0,1,0).Unit*-5.5)
+	local hit,ray = workspace:FindPartOnRayWithIgnoreList(r,ignorelist)
+	if hit then
+		floorpositiony = ray.Y
+		if	hitfloor == false then
+			hitfloor = true
+			if root.Velocity.Y < -60 then
+				if cdown == true then
+					root.Velocity = Vector3.new(root.Velocity.X,-10,root.Velocity.Z)
+					cdown = false
+
+					roll()
+					else
+					    if root.Velocity.Y < -90  then
+					       downer()
+			
+					        end
+
+				end
+			end
+		end
+
+	else
+		if	hitfloor == true then
+			hitfloor = false
+		end
+	end
+	local r = Ray.new(root.Position,root.CFrame.LookVector*1.8)
+	local hit,ray,rp = workspace:FindPartOnRayWithIgnoreList(r,ignorelist)
+	if hit then
+		fronthit = true
+		rppos = rp
+	else
+		fronthit = false
+	end
+	if hitfloor == true then
+
+		if cdown == true then
+			if flow < flowmin+5 then
+
+				if flow ~= crouchspeed then
+					flow = crouchspeed
+				end
+				if crouchingplay.IsPlaying == false then
+					crouchingplay:Play()
+					randomclothrollsound()
+				end
+			else
+				if landed == true then
+					slide()	
+				end
+				
+			end
+		end
+
+	end
+	if cdown == false then
+		if crouchingplay.IsPlaying == true then
+			crouchingplay:Stop()
+		end
+		if walkingmode == false  and hum.MoveDirection ~= Vector3.new(0,0,0)  or wallrunning == true then
+			flow = flow+flowmax/70
+		
+			
+			if tricksinarow > 8 then
+			    			if combatmusic.Volume ~= 0.5 then
+			    combatmusic.Volume = 0
+			    ambience.Volume = 0
+			    explorationmusic.Volume =0.5
+			    end
+			    end
+			
+			if timestanding ~= 0 then
+			    timestanding = 0
+			    end
+			if flow > flowmax then
+				flow = flowmax
+			end
+		else
+			flow = flow-flowmax/23
+			if combatmusic.Volume ~= 0.5 then
+			    timestanding = timestanding+0.05
+			end
+		   
+			if timestanding > 18 then
+			    timestanding = 0
+			    tricksinarow = 0
+			   if combatmusic.Volume ~= 0.5 then
+			       if ambience.Volume ~= 0.5 then
+			           ambience.Volume = 0.5
+			           explorationmusic.Volume = 0
+			           combatmusic.Volume = 0
+			           
+			           end
+			       
+			       end
+			    end
+			if flow < flowmin then
+				flow = flowmin
+			end
+		end
+
+
+
+	end
+	if downed == false then
+	    	hum.WalkSpeed = flow
+	    	else
+	    	    hum.WalkSpeed = 1
+	    end
+
+end
